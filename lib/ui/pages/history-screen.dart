@@ -21,12 +21,33 @@ class HistoryScreen extends StatelessWidget {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(5),
                 ),
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.85,
                 padding: EdgeInsets.all(16),
                 margin: EdgeInsets.all(8),
-                child: Text(
-                  myController.items[index],
-                  style: Theme.of(context).textTheme.headline6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${myController.items[index]} ", // Muestra la fecha y hora del elemento
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    Text(
+                      "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Text(
+                      "${myController.duration[index]} Minutos", // Muestra el texto del elemento
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      ElevatedButton(
+                        child: Text('Ver Mapa'),
+                        onPressed: () {
+                          // Aquí iría el código para abrir el mapa
+                        },
+                      ),
+                    ]),
+                  ],
                 ),
               ),
             );
