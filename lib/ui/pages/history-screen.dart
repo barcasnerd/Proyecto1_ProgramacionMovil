@@ -13,18 +13,33 @@ class HistoryScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Row(
+            children: [
+            
+            ],
+          ),
           Container(
             padding: EdgeInsets.all(8),
             margin: EdgeInsets.all(8),
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Buscar por Tramo',
+                labelText: 'Tramo A',
+                //border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(8),
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Tramo B',
                 border: OutlineInputBorder(),
               ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: Obx(() => ListView.builder(
               itemCount: myController.items.length,
               itemBuilder: (context, index) {
                 return Center(
@@ -68,6 +83,8 @@ class HistoryScreen extends StatelessWidget {
               },
             ),
           ),
+          ),
+          FloatingActionButton(onPressed: () => {myController.editarItem()})
         ],
       ),
     );
