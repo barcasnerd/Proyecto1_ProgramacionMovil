@@ -7,8 +7,8 @@ import 'package:indexed/indexed.dart';
 class RouteScreen extends StatelessWidget {
   RouteScreen({super.key});
 
-  CameraPosition _initialPosition =
-      CameraPosition(target: LatLng(26.8206, 30.8025), zoom: 4.0);
+  CameraPosition _initialPosition = CameraPosition(
+      target: LatLng(10.980768198438865, -74.80697509093083), zoom: 12.0);
 
   @override
   Widget build(BuildContext context) {
