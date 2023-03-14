@@ -52,12 +52,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.blue,
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 40),
           Align(
             alignment: Alignment.center,
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/imagendeperfil.png'),
+              backgroundImage: AssetImage('assets/imagendeperfil.jpg'),
             ),
           ),
           SizedBox(height: 10),
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: 500,
               height: 250,
               decoration: BoxDecoration(
-                color: Colors.lightBlue,
+                color: Colors.blueGrey,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
