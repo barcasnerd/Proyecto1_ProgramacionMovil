@@ -44,69 +44,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
-          SizedBox(height: 10),
-          Text(
-            _bio,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.blue,
-              
-            ),
-          )
-          
-          SizedBox(height: 20),
-          Align(
-            alignment: Alignment.center,
-            child: CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
-                  'https://randomuser.me/api/portraits/men/1.jpg',
-                ),
-                ),
-          ),
-          
-
-
-
           SizedBox(height: 20),
           Text(
             _username,
             style: TextStyle(
               fontSize: 24,
+              color: Colors.blue,
+            ),
+          ),
+          SizedBox(height: 20),
+          Align(
+            alignment: Alignment.center,
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/imagendeperfil.png'),
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            _bio,
+            style: TextStyle(
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-         
-      
-      Padding(
-      padding:EdgeInsets.only(top:50)
-      child:Container(
-      width: 400,
-      height: 200,
-      color: Colors.cyan,
-      padding: EdgeInsets.all(20),
-      child: Text(
-        'Recorrido total: 863km/n'
-        'tiempo de ruta total: 18 horas/n'
-        'tiempo en a pie total: 40 horas 15 minutos /n'
-        'velocidad promedio de ruta:32km/h /n'
-        'velocidad promedio a pie: 14km/h /n',
-        style: TextStyle(
-          fontSize: 20,
-          color: Colors.white,
-        ),
-      ),
-    )
-    )
-  
+          Padding(
+            padding: EdgeInsets.only(top: 70),
+            child: Container(
+              width: 500,
+              height: 300,
+              decoration: BoxDecoration(
+                color: Colors.cyan,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  'Recorrido total: 863km\n\n'
+                  'Tiempo de ruta total: 18 horas\n\n'
+                  'Tiempo en a pie total: 40 horas 15 minutos\n\n'
+                  'Velocidad promedio de ruta: 32km/h\n\n'
+                  'Velocidad promedio a pie: 14km/h\n\n',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
-    
-  
-  
 
   void _editProfile(BuildContext context) {
     showDialog(
