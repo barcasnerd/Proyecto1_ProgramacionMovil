@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:exercise_tracker/ui/pages/history-screen.dart';
-import 'package:exercise_tracker/ui/pages/home-screen.dart';
+import 'package:exercise_tracker/ui/pages/home_screen.dart';
 import 'package:exercise_tracker/ui/pages/profile-screen.dart';
 
 class NavController extends GetxController {
