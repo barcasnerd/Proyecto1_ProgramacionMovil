@@ -33,8 +33,8 @@ class DraftScreen extends StatelessWidget {
                 child: const Text("Profile")),
             ElevatedButton(
                 onPressed: () =>
-                    {Navigator.of(context).pushNamed("/individualTrack")},
-                child: const Text("IndividualTrack")),
+                    {Navigator.of(context).pushNamed("/individual Track")},
+                child: const Text("Individual Track")),
           ],
         ),
       ),

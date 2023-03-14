@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         "/map": (context) => const MapScreen(),
         "/history": (context) => const HistoryScreen(),
         "/profile": (context) => const ProfileScreen(),
-        "/individualTrack": (context) => const IndividualTrackScreen(),
+        "/individual Track": (context) => const IndividualTrackScreen(),
       },
     );
   }
