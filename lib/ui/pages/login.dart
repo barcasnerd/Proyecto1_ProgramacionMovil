@@ -4,9 +4,9 @@ import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 
 class LoginScreen extends StatelessWidget {
-  
-  final NavController controller = Get.put(NavController());
-  
+  const LoginScreen({super.key});
+  static NavController controller = Get.put(NavController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

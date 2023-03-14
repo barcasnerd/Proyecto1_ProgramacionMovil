@@ -13,13 +13,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      key: Get.key,
       debugShowCheckedModeBanner: false,
       title: 'Exercise Tracker',
       initialRoute: "/",
       routes: {
         "/": (context) => const DraftScreen(),
-        "/login": (context) => LoginScreen(),
+        "/login": (context) => const LoginScreen(),
         "/home": (context) => const HomeScreen(),
         "/route": (context) => const RouteScreen(),
         "/map": (context) => const MapScreen(),
