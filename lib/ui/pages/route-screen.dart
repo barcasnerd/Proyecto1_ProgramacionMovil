@@ -29,7 +29,7 @@ class RouteScreen extends StatelessWidget {
                       bottom: windowHeight * 0.005),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => {},
+                    onPressed: () => {Navigator.pop(context)},
                   ),
                 ),
                 Padding(
@@ -122,11 +122,15 @@ class RouteScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      children: [SizedBox()],
-                    )
                   ],
                 ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: windowWidth * 0.05,
+                    )
+                  ],
+                )
               ],
             )
           ],
