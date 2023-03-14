@@ -26,8 +26,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String _username = 'Augusto';
-  String _bio = 'Hola, Augusto';
+  String _username = 'Perfil';
+  String _bio = 'Augusto';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +44,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 20),
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage(
-              'https://randomuser.me/api/portraits/men/1.jpg',
+          
+          SizedBox(height: 10),
+          Text(
+            _bio,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.blue,
+              
             ),
+          )
+          
+          SizedBox(height: 20),
+          Align(
+            alignment: Alignment.center,
+            child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(
+                  'https://randomuser.me/api/portraits/men/1.jpg',
+                ),
+                ),
           ),
+          
+
+
+
           SizedBox(height: 20),
           Text(
             _username,
@@ -58,18 +77,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
-          Text(
-            _bio,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.blue,
-            ),
-          ),
+         
+      
+      Padding(
+      padding:EdgeInsets.only(top:50)
+      child:Container(
+      width: 400,
+      height: 200,
+      color: Colors.cyan,
+      padding: EdgeInsets.all(20),
+      child: Text(
+        'Recorrido total: 863km/n'
+        'tiempo de ruta total: 18 horas/n'
+        'tiempo en a pie total: 40 horas 15 minutos /n'
+        'velocidad promedio de ruta:32km/h /n'
+        'velocidad promedio a pie: 14km/h /n',
+        style: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+      ),
+    )
+    )
+  
         ],
       ),
     );
   }
+    
+  
+  
 
   void _editProfile(BuildContext context) {
     showDialog(
@@ -88,7 +125,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Bio',
+                  labelText: 'contraseña',
+                ),
+                onChanged: (value) => _bio = value,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'fecha de nacimiento',
                 ),
                 onChanged: (value) => _bio = value,
               ),
