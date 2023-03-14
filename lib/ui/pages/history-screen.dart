@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/historyController.dart';
+import '../controllers/history_controller.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
-  static historyController myController = Get.put(historyController());
+  static HistoryController myController = Get.put(HistoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
