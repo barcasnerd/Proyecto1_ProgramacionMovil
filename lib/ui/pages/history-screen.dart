@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/history_controller.dart';
+import '../controllers/nav_controller.dart';
+import '../widgets/CustomNavBar.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
   static HistoryController myController = Get.put(HistoryController());
+  static NavController controllerNav = Get.put(NavController());
   @override
   Widget build(BuildContext context) {
+    double windowHeight = MediaQuery.of(context).size.height;
+    double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Historial'),
-      ),
       body: Column(
         children: [
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.only(
+                    top: windowHeight * 0.04,
+                    left: windowHeight * 0.001,
+                    bottom: windowHeight * 0.005),
                 margin: EdgeInsets.all(8),
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: TextField(
@@ -38,7 +43,10 @@ class HistoryScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.only(
+                    top: windowHeight * 0.04,
+                    left: windowHeight * 0.001,
+                    bottom: windowHeight * 0.005),
                 margin: EdgeInsets.all(8),
                 width: MediaQuery.of(context).size.width * 0.45,
                 child: TextField(
@@ -111,6 +119,7 @@ class HistoryScreen extends StatelessWidget {
           //FloatingActionButton(onPressed: () => {myController.editarItem()})
         ],
       ),
+      bottomNavigationBar: CustomNavBar(controller: controllerNav),
     );
   }
 }

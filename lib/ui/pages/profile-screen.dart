@@ -1,26 +1,12 @@
-/*import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileScreen'),
-      ),
-      body: Center(
-        child: Text("ProfileScreen"),
-      ),
-    );
-  }
-}
-*/
+import '../controllers/nav_controller.dart';
+import '../widgets/CustomNavBar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
-
+  static NavController controllerNav = Get.put(NavController());
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -28,19 +14,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String _username = 'Perfil';
   String _bio = 'Augusto';
-
+  static NavController controllerNav = Get.put(NavController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profilescreen'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () => _editProfile(context),
-          ),
-        ],
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -57,7 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             alignment: Alignment.center,
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/imagendeperfil.jpg'),
             ),
           ),
           SizedBox(height: 10),
@@ -121,6 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: CustomNavBar(controller: controllerNav),
     );
   }
 
