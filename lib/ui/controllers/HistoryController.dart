@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class historyController extends GetxController {
+class HistoryController extends GetxController {
   final RxList<String> items = [
     "1 de marzo 2023",
     "3 de marzo 2023",
