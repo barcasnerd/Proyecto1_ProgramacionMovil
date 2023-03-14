@@ -2,9 +2,7 @@
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
-  final _username = ''.obs;
-  final _fullName = ''.obs;
-  final _email = ''.obs;
+  
   late String selectedGender;
 
   void setGender() {

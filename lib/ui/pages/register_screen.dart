@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   static RegisterController controller = Get.put(RegisterController());
 
@@ -97,11 +97,21 @@ class RegisterScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 50.0),
-              ElevatedButton(
-                onPressed: () {
-                  controller.changePageHome();
-                },
-                child: const Text('Registrarse'),
+              SizedBox(
+                width: 250,
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey),
+                  ),
+                  onPressed: () {
+                    controller.changePageHome();
+                  },
+                  child: const Text(
+                    'Registrarse',
+                    style: TextStyle(color: Color.fromARGB(170, 0, 0, 0)),
+                  ),
+                ),
               ),
             ],
           ),
