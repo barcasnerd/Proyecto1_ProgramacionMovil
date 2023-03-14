@@ -69,12 +69,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 70),
+            padding: EdgeInsets.only(top: 60),
             child: Container(
               width: 500,
-              height: 300,
+              height: 250,
               decoration: BoxDecoration(
-                color: Colors.cyan,
+                color: Colors.lightBlue,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -98,7 +98,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Colors.white,
                   ),
                 ),
+
+                // Espacio entre el borde derecho y el botón
               ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => {},
+            child: Padding(
+              padding:
+                  EdgeInsets.all(10), // Ajusta el relleno interno del botón
+              child: Text(
+                'Eliminar cuenta',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red, // Cambia el color del botón a rojo
             ),
           ),
         ],
