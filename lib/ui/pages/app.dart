@@ -7,12 +7,11 @@ import 'package:exercise_tracker/ui/pages/map-screen.dart';
 import 'package:exercise_tracker/ui/pages/profile-screen.dart';
 import 'package:exercise_tracker/ui/pages/route-screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Exercise Tracker',
       initialRoute: "/",
