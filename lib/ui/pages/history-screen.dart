@@ -96,7 +96,7 @@ class HistoryScreen extends StatelessWidget {
                                 ElevatedButton(
                                   child: Text('Ver Mapa'),
                                   onPressed: () {
-                                    // Aquí iría el código para abrir el mapa
+                                    myController.changePage();
                                   },
                                 ),
                               ]),
