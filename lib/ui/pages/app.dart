@@ -19,7 +19,7 @@ class App extends StatelessWidget {
         "/": (context) => const DraftScreen(),
         "/login": (context) => const LoginScreen(),
         "/home": (context) => const HomeScreen(),
-        "/route": (context) => const RouteScreen(),
+        "/route": (context) => RouteScreen(),
         "/map": (context) => const MapScreen(),
         "/history": (context) => const HistoryScreen(),
         "/profile": (context) => const ProfileScreen(),
