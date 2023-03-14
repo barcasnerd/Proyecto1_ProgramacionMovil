@@ -4,7 +4,7 @@ import '../controllers/historyController.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
-  static historyController myController = Get.put(historyController());
+  static HistoryController myController = Get.put(HistoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
