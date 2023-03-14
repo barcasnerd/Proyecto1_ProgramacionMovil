@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/HistoryController.dart';
+
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
