@@ -38,6 +38,7 @@ dependencies:
   get: ^4.6.5
   google_maps_flutter: ^2.2.5
   google_maps_flutter_web: ^0.4.0+7
+  indexed: ^0.0.8
 
 dev_dependencies:
   flutter_test:
