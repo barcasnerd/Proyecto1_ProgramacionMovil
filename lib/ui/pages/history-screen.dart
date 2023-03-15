@@ -111,7 +111,7 @@ class HistoryScreen extends StatelessWidget {
                                 ElevatedButton(
                                   child: Text('Ver Mapa'),
                                   onPressed: () {
-                                    myController.changePage();
+                                    myController.changePage(index);
                                   },
                                 ),
                               ]),

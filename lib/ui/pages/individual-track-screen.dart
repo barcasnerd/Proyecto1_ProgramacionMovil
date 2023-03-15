@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/history_controller.dart';
 
 class IndividualTrackScreen extends StatelessWidget {
   const IndividualTrackScreen({super.key});
+  static HistoryController myController = Get.put(HistoryController());
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    int index = args as int;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recorrido'),
@@ -13,9 +19,9 @@ class IndividualTrackScreen extends StatelessWidget {
           child: Column(
         children: [
           Container(
-            width: 500,
-            height: 500,
-            color: Colors.blue,
+            //child: Image.asset('assets/maparecorrido.png'),
+            child: Image.network(
+                "https://s1.ppllstatics.com/diariosur/www/multimedia/201805/25/media/cortadas/mapa-recorrido-magna-kzc-U502021277800ZuC-624x460@Diario%20Sur.jpg"),
           ),
           Expanded(
             child: Center(
@@ -23,11 +29,10 @@ class IndividualTrackScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    color: Colors.amber,
                     child: Column(
                       children: [
                         Text(
-                          "00:00:00",
+                          "${myController.duration[index]}",
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         Text("Tiempo"),
@@ -35,11 +40,10 @@ class IndividualTrackScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: Colors.cyanAccent,
                     child: Column(
                       children: [
                         Text(
-                          "0 Km",
+                          "${myController.distance[index]} Km",
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         Text("Distancia"),

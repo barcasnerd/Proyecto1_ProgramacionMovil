@@ -54,8 +54,8 @@ class HistoryController extends GetxController {
     duration.removeAt(index);
   }
 
-  void changePage() {
+  void changePage(int index) {
     //Get.toNamed('route': '/individualTrack', 'page': const IndividualTrackScreen());
-    Get.toNamed('/individualTrack');
+    Get.toNamed('/individualTrack', arguments: index);
   }
 }
