@@ -87,7 +87,7 @@ class HistoryScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           Text(
-                            "${myController.duration[index]} Minutos", // Muestra el texto del elemento
+                            "${myController.duration[index]} de duracion", // Muestra el texto del elemento
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           Row(
@@ -157,7 +157,7 @@ class HistoryScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
-                      "${myController.duration[index]} Minutos", // Muestra el texto del elemento
+                      "${myController.duration[index]} de duracion", // Muestra el texto del elemento
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
