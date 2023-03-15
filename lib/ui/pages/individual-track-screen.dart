@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/history_controller.dart';
+import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
+import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
 
 class IndividualTrackScreen extends StatelessWidget {
   const IndividualTrackScreen({super.key});
   static HistoryController myController = Get.put(HistoryController());
+  static NavController controllerNav = Get.put(NavController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,7 @@ class IndividualTrackScreen extends StatelessWidget {
           ),
         ],
       )),
+      bottomNavigationBar: CustomNavBar(controller: controllerNav),
     );
   }
 }
