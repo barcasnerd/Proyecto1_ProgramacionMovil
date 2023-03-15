@@ -173,7 +173,8 @@ class HistoryScreen extends StatelessWidget {
             ),
             ElevatedButton(
               child: Text('Confirmar'),
-              onPressed: () => {},
+              onPressed: () =>
+                  {myController.eliminarHistory(index), Navigator.pop(context)},
             ),
           ],
         );

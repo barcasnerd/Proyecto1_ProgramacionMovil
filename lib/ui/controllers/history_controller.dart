@@ -38,6 +38,12 @@ class HistoryController extends GetxController {
     ]);
   }
 
+  void eliminarHistory(int index) {
+    items.removeAt(index);
+    distance.removeAt(index);
+    duration.removeAt(index);
+  }
+
   void changePage() {
     //Get.toNamed('route': '/individualTrack', 'page': const IndividualTrackScreen());
     Get.toNamed('/individualTrack');
