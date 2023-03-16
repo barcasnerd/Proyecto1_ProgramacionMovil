@@ -32,7 +32,7 @@ class IndividualTrackScreen extends StatelessWidget {
                       ],
                     )
                   , ElevatedButton(
-                onPressed: () => {Navigator.of(context).pushNamed("/delete")},
+                onPressed: () => {mostrarAlertaEliminar(context, '00:22:45', '6 KM')},
                 child: const Text("Eliminar")),],
                 ),
               ],
@@ -45,6 +45,72 @@ class IndividualTrackScreen extends StatelessWidget {
   }
 }
 
+
+
+
+
+
+
+
+
+
+void mostrarAlertaEliminar(BuildContext context, String tiempo, String distancia) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CustomAlertDialog(tiempo: tiempo, distancia: distancia);
+    },
+  );
+}
+
+class CustomAlertDialog extends StatelessWidget {
+  final String tiempo;
+  final String distancia;
+
+  CustomAlertDialog({required this.tiempo, required this.distancia});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Eliminar registro'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Text(tiempo, style: TextStyle(fontSize: 20)),
+              SizedBox(width: 30),
+              Text(distancia, style: TextStyle(fontSize: 20)),
+            ],
+          ),
+          SizedBox(height: 7),
+          Row(
+            children: [
+              Text('Tiempo', style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(width: 50),
+              Text('Distancia', style: TextStyle(fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          child: Text('Cancelar'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text('Eliminar'),
+          onPressed: () {
+            // Aquí puedes agregar la lógica para eliminar el registro
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+}
 
 
 
