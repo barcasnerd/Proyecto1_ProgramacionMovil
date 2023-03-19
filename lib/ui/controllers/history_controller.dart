@@ -16,8 +16,18 @@ class HistoryController extends GetxController {
   final List<String> distance =
       ["25", "83", "14", "69", "55", "42", "91", "18", "76", "29"].obs;
 
-  final List<String> duration =
-      ["142", "76", "289", "427", "623", "71", "91", "182", "38", "126"].obs;
+  final List<String> duration = [
+    "00:02:22",
+    "00:01:16",
+    "00:04:49",
+    "00:07:07",
+    "00:10:23",
+    "00:01:11",
+    "00:01:31",
+    "00:03:02",
+    "00:00:38",
+    "00:02:06"
+  ].obs;
 
   void _setItems(List<String> value) {
     this.items.value = value;
@@ -38,8 +48,14 @@ class HistoryController extends GetxController {
     ]);
   }
 
-  void changePage() {
+  void eliminarHistory(int index) {
+    items.removeAt(index);
+    distance.removeAt(index);
+    duration.removeAt(index);
+  }
+
+  void changePage(int index) {
     //Get.toNamed('route': '/individualTrack', 'page': const IndividualTrackScreen());
-    Get.toNamed('/individualTrack');
+    Get.toNamed('/individualTrack', arguments: index);
   }
 }
