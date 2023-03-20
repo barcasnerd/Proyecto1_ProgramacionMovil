@@ -98,7 +98,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(top: windowHeight * 0.2),
+                padding: EdgeInsets.only(top: windowHeight * 0.15),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -132,7 +132,42 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ))
+                )),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: windowHeight * 0.03,
+                  left: windowWidth * 0.09,
+                  right: windowWidth * 0.09),
+              child: Row(children: <Widget>[
+                Expanded(child: Divider()),
+                Text(
+                  ' Or ',
+                  style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
+                ),
+                Expanded(child: Divider()),
+              ]),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: windowHeight * 0.03),
+              child: Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Don’t have an account yet?',
+                        style:
+                            GoogleFonts.poppins(fontSize: windowHeight * 0.02),
+                      ),
+                      TextButton(
+                          onPressed: () => {},
+                          child: Text(
+                            'Register',
+                            style: GoogleFonts.poppins(
+                                fontSize: windowHeight * 0.02),
+                          ))
+                    ]),
+              ),
+            ),
           ],
         ));
   }
