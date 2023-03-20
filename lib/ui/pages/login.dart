@@ -99,33 +99,37 @@ class LoginScreen extends StatelessWidget {
             ),
             Padding(
                 padding: EdgeInsets.only(top: windowHeight * 0.2),
-                child: DecoratedBox(
+                child: Container(
                   decoration: BoxDecoration(
-                    border: null,
-                    gradient: LinearGradient(colors: [
-                      Color.fromRGBO(0, 195, 255, 1),
-                      Color.fromRGBO(0, 255, 162, 1),
-                    ]),
-                    borderRadius: BorderRadius.circular(100.0),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(157, 206, 255, 1),
+                        Color.fromRGBO(6, 252, 163, 1)
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                   child: ElevatedButton.icon(
-                    icon: Icon(IconlyBold.login),
-                    onPressed: () => {},
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.transparent),
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            Size(windowWidth * 0.9, windowHeight * 0.09)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    side: BorderSide.none))),
+                    onPressed: () {},
+                    icon: Icon(
+                      IconlyBold.login,
+                      color: Colors.white,
+                    ),
                     label: Text(
                       'Login',
                       style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
-                          fontSize: windowHeight * 0.03),
+                          fontSize: windowHeight * 0.03,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(windowWidth * 0.8, windowHeight * 0.08),
+                      primary: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                     ),
                   ),
                 ))
