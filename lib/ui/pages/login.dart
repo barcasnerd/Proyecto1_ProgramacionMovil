@@ -1,104 +1,135 @@
-import 'package:exercise_tracker/ui/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-  static LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
+    double windowHeight = MediaQuery.of(context).size.height;
+    double windowWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        resizeToAvoidBottomInset: false,
+        body: Column(
           children: [
-            SizedBox(
-              height: 150.0,
-              child: Column(
+            Padding(
+              padding: EdgeInsets.only(top: windowHeight * 0.1, bottom: 0),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.accessibility_new,
-                    size: 100.0,
-                    color: Colors.black,
-                  ),
-                  Text(
-                    'Fitness Tracker',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                    ),
+                  Image(
+                    image: const AssetImage('assets/images/main_logo.png'),
+                    width: windowWidth * 0.5,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 18.0),
-            const SizedBox(height: 4.0),
-            const Text(
-              'Iniciar Sesión',
-              style: TextStyle(
-                fontSize: 44.0,
-                fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Dunord Fit Tracker',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: windowHeight * 0.03))),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: windowHeight * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      child: SizedBox(
+                    width: windowWidth * 0.9,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          filled: true,
+                          border: InputBorder.none,
+                          hintText: 'Email',
+                          prefixIcon: Icon(IconlyLight.message)),
+                    ),
+                  )),
+                ],
               ),
             ),
-            const SizedBox(height: 18.0),
-            const SizedBox(height: 4.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Usuario',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 18.0),
-            const SizedBox(height: 4.0),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Contraseña',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 50.0),
-            SizedBox(
-              width: 250,
-              child: OutlinedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.grey),
-                ),
-                onPressed: () {
-                  controller.changePageHome();
-                },
-                child: const Text(
-                  'Iniciar sesión',
-                  style: TextStyle(color: Color.fromARGB(170, 0, 0, 0)),
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: windowHeight * 0.02),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      child: SizedBox(
+                    width: windowWidth * 0.9,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          filled: true,
+                          hintText: 'Password',
+                          prefixIcon: Icon(IconlyLight.lock),
+                          suffixIcon: Icon(IconlyLight.hide)),
+                    ),
+                  )),
+                ],
               ),
             ),
-            SizedBox(
-              height: 60.0,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () {
-                    controller.changePageRegister();
-                  },
-                  child: Text(
-                    'Regístrate',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
+            Padding(
+                padding: EdgeInsets.only(top: windowHeight * 0.2),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: null,
+                    gradient: LinearGradient(colors: [
+                      Color.fromRGBO(0, 195, 255, 1),
+                      Color.fromRGBO(0, 255, 162, 1),
+                    ]),
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: ElevatedButton.icon(
+                    icon: Icon(IconlyBold.login),
+                    onPressed: () => {},
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent),
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            Size(windowWidth * 0.9, windowHeight * 0.09)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    side: BorderSide.none))),
+                    label: Text(
+                      'Login',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: windowHeight * 0.03),
                     ),
                   ),
-                ),
-              ),
-            )
+                ))
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
