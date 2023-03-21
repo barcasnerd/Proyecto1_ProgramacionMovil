@@ -112,7 +112,8 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () =>
+                        {Navigator.of(context).popAndPushNamed('/home')},
                     icon: Icon(
                       IconlyBold.login,
                       color: Colors.white,
@@ -159,11 +160,13 @@ class LoginScreen extends StatelessWidget {
                             GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       ),
                       TextButton(
-                          onPressed: () => {},
+                          onPressed: () =>
+                              {Navigator.of(context).pushNamed('/register')},
                           child: Text(
                             'Register',
                             style: GoogleFonts.poppins(
-                                fontSize: windowHeight * 0.02),
+                                fontSize: windowHeight * 0.02,
+                                fontWeight: FontWeight.bold),
                           ))
                     ]),
               ),
