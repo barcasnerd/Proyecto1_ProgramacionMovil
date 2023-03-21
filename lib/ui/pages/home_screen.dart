@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
-                        fontSize: windowWidth * 0.07),
+                        fontSize: windowWidth * 0.06),
                   )
                 ],
               ),
@@ -123,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: windowHeight * 0.01),
+                    padding: EdgeInsets.only(top: windowHeight * 0.007),
                     child: Text(
                       'Or maybe you want to run?\npick whatever you wanna do below ',
                       style: GoogleFonts.poppins(
@@ -144,6 +144,7 @@ class HomeScreen extends StatelessWidget {
                     colors: [
                       Color.fromRGBO(211, 244, 252, 1),
                       Color.fromRGBO(135, 215, 235, 1),
+                      Color.fromRGBO(6, 252, 163, 1)
                     ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -177,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                                   'Enjoy a relaxing walk\nor a intense running\nsession, either wa\nwe will track it for you',
                                   style: GoogleFonts.poppins(
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w100,
+                                      fontWeight: FontWeight.w200,
                                       fontSize: windowWidth * 0.04))
                             ],
                           )
@@ -232,6 +233,7 @@ class HomeScreen extends StatelessWidget {
                     colors: [
                       Color.fromRGBO(211, 244, 252, 1),
                       Color.fromRGBO(135, 215, 235, 1),
+                      Color.fromRGBO(6, 252, 163, 1)
                     ],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -265,7 +267,7 @@ class HomeScreen extends StatelessWidget {
                                   'Push yourself to the\nlimit and track you\nbiking goals with ou\ngreat tracker',
                                   style: GoogleFonts.poppins(
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w100,
+                                      fontWeight: FontWeight.w200,
                                       fontSize: windowWidth * 0.04))
                             ],
                           )
