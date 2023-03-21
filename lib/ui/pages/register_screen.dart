@@ -210,7 +210,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       TextButton(
                           onPressed: () =>
-                              {Navigator.of(context).pushNamed('/login')},
+                              {Navigator.of(context).popAndPushNamed('/login')},
                           child: Text(
                             'Login',
                             style: GoogleFonts.poppins(

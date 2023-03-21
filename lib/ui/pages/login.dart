@@ -35,11 +35,11 @@ class LoginScreen extends StatelessWidget {
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: windowHeight * 0.03))),
+                            fontSize: windowHeight * 0.04))),
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: windowHeight * 0.05),
+              padding: EdgeInsets.only(top: windowHeight * 0.04),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.visiblePassword,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       obscureText: true,
                       decoration: InputDecoration(
@@ -160,8 +160,10 @@ class LoginScreen extends StatelessWidget {
                             GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       ),
                       TextButton(
-                          onPressed: () =>
-                              {Navigator.of(context).pushNamed('/register')},
+                          onPressed: () => {
+                                Navigator.of(context)
+                                    .popAndPushNamed('/register')
+                              },
                           child: Text(
                             'Register',
                             style: GoogleFonts.poppins(
