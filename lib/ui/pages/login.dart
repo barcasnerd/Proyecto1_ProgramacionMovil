@@ -17,13 +17,14 @@ class LoginScreen extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: windowHeight * 0.1, bottom: 0),
+              padding: EdgeInsets.only(
+                  top: windowHeight * 0.1, bottom: windowHeight * 0.04),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image(
-                    image: const AssetImage('assets/images/main_logo.png'),
-                    width: windowWidth * 0.5,
+                    image: const AssetImage('assets/images/main_logo2.png'),
+                    width: windowWidth * 0.3,
                   ),
                 ],
               ),
