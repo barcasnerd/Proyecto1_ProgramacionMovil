@@ -25,7 +25,7 @@ class App extends StatelessWidget {
         "/completeProfile": (context) => const CompleteProfileScreen(),
         "/home": (context) => const HomeScreen(),
         "/route": (context) => RouteScreen(),
-        "/map": (context) => const MapScreen(),
+        "/map": (context) => MapScreen(),
         "/history": (context) => const HistoryScreen(),
         "/profile": (context) => const ProfileScreen(),
         "/individualTrack": (context) => const IndividualTrackScreen(),
