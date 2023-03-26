@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DraftScreen extends StatelessWidget {
   const DraftScreen({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +35,9 @@ class DraftScreen extends StatelessWidget {
                 onPressed: () =>
                     {Navigator.of(context).pushNamed("/individualTrack")},
                 child: const Text("IndividualTrack")),
+            ElevatedButton(
+                onPressed: () => {Navigator.of(context).pushNamed("/sections")},
+                child: const Text("Sections")),
           ],
         ),
       ),

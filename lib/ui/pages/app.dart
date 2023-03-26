@@ -7,6 +7,7 @@ import 'package:exercise_tracker/ui/pages/map-screen.dart';
 import 'package:exercise_tracker/ui/pages/profile-screen.dart';
 import 'package:exercise_tracker/ui/pages/register_screen.dart';
 import 'package:exercise_tracker/ui/pages/route-screen.dart';
+import 'package:exercise_tracker/ui/pages/sections.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +21,14 @@ class App extends StatelessWidget {
       routes: {
         "/": (context) => const DraftScreen(),
         "/login": (context) => const LoginScreen(),
-        "/register":(context) => const RegisterScreen(),
+        "/register": (context) => const RegisterScreen(),
         "/home": (context) => const HomeScreen(),
         "/route": (context) => RouteScreen(),
         "/map": (context) => const MapScreen(),
         "/history": (context) => const HistoryScreen(),
         "/profile": (context) => const ProfileScreen(),
         "/individualTrack": (context) => const IndividualTrackScreen(),
+        "/sections": (context) => const Sections(),
       },
     );
   }

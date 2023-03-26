@@ -62,9 +62,15 @@ class HistoryScreen extends StatelessWidget {
             alignment: AlignmentDirectional.centerEnd,
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
-              child: Text('View all activities',
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(fontSize: windowHeight * 0.018))),
+              child: GestureDetector(
+                onTap: () {
+                  myController.changePageSections();
+                  print('El Texto fue presionado');
+                },
+                child: Text('View all activities',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: windowHeight * 0.018))),
+              ),
             ),
           ),
           Expanded(

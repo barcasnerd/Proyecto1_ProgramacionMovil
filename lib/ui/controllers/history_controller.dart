@@ -43,7 +43,17 @@ class HistoryController extends GetxController {
     false,
     true
   ];
-
+  final List<String> sections = [
+    "Buenavista",
+    "Mi Casa",
+    "Puente Pumarejo",
+    "Adelita",
+    "La 30",
+    "Circunvalar",
+    "Corredor",
+    "im",
+    "done",
+  ].obs;
   void _setItems(List<String> value) {
     this.items.value = value;
   }
@@ -84,5 +94,9 @@ class HistoryController extends GetxController {
   void changePage(int index) {
     //Get.toNamed('route': '/individualTrack', 'page': const IndividualTrackScreen());
     Get.toNamed('/individualTrack', arguments: index);
+  }
+
+  void changePageSections() {
+    Get.toNamed('/sections');
   }
 }
