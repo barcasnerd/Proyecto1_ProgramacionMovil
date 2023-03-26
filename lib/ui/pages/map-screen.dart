@@ -56,13 +56,12 @@ class MapScreen extends StatelessWidget {
                           controller.setMapStyle(
                               ' [{"featureType":"poi","stylers":[{"visibility":"off"}]}]');
                         },
-                        mapType: MapType.none,
                         zoomControlsEnabled: false,
                         buildingsEnabled: false,
                         initialCameraPosition: CameraPosition(
                             target: LatLng(snapshot.data?.latitude ?? 10.963889,
                                 snapshot.data?.longitude ?? -74.796387),
-                            zoom: 15.0),
+                            zoom: .0),
                         myLocationEnabled: true,
                         myLocationButtonEnabled: true,
                       ),
