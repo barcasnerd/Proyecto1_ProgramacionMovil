@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HistoryController extends GetxController {
@@ -28,6 +31,18 @@ class HistoryController extends GetxController {
     "00:00:38",
     "00:02:06"
   ].obs;
+  final List<bool> type = [
+    true,
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    true
+  ];
 
   void _setItems(List<String> value) {
     this.items.value = value;
@@ -46,6 +61,18 @@ class HistoryController extends GetxController {
       "29 de marzo 2023",
       "30 de test 2023"
     ]);
+  }
+
+  var selectedItem = "Option 1".obs;
+  final RxList<String> myList = ["Option 1", "Option 2", "Option 3", "xd"].obs;
+
+  void setSelectedItem(String value) {
+    log("Ejecuto ${value}");
+    selectedItem.value = value;
+    this.selectedItem.value = value;
+    log("${selectedItem}");
+
+    update();
   }
 
   void eliminarHistory(int index) {
