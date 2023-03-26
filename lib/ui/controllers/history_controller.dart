@@ -73,7 +73,7 @@ class HistoryController extends GetxController {
     ]);
   }
 
-  var selectedItem = "Option 1".obs;
+  var selectedItem = "Buenavista".obs;
   final RxList<String> myList = ["Option 1", "Option 2", "Option 3", "xd"].obs;
 
   void setSelectedItem(String value) {

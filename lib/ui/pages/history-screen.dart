@@ -42,19 +42,28 @@ class HistoryScreen extends StatelessWidget {
               color: Color.fromARGB(250, 247, 248, 248),
             ),
             width: windowWidth * 0.8,
-            child: DropdownButton<String>(
-              value: myController.selectedItem.value,
-              items: myController.myList.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                log("Hice cambio ${newValue}");
-                _selectedValue = newValue ?? "";
-                myController.setSelectedItem(_selectedValue);
-              },
+            child: Obx(
+              () => DropdownButton<String>(
+                value: myController.selectedItem.value,
+                items: myController.sections.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.475,
+                          0), // Agrega un padding de 8 píxeles alrededor del texto
+
+                      child: Text(value),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  log("Hice cambio ${newValue}");
+                  _selectedValue = newValue ?? "";
+                  myController.setSelectedItem(_selectedValue);
+                },
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                underline: Container(),
+              ),
             ),
           ),
 
