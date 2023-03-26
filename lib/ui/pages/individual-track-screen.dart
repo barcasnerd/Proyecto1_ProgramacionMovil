@@ -15,9 +15,7 @@ class IndividualTrackScreen extends StatelessWidget {
     int index = args as int;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recorrido'),
-      ),
+      backgroundColor: Colors.white,
       body: Center(
           child: Column(
         children: [

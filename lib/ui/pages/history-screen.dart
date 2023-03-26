@@ -61,7 +61,7 @@ class HistoryScreen extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: Container(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
               child: Text('View all activities',
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(fontSize: windowHeight * 0.018))),
@@ -108,30 +108,42 @@ class HistoryScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Text(
-                                  "${myController.items[index]} ", // Muestra la fecha y hora del elemento
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
-                                ),
-                                Text(
-                                  "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                Text(
-                                  "${myController.duration[index]} de duracion", // Muestra el texto del elemento
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${myController.items[index]} ", // Muestra la fecha y hora del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall,
+                                      ),
+                                      Text(
+                                        "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                      Text(
+                                        "${myController.duration[index]} de duracion", // Muestra el texto del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ElevatedButton(
                                         onPressed: () =>
                                             {_deleteHistory(context, index)},
                                         child: Text(
-                                          'Eliminar Recorrido',
+                                          'Delete',
                                           style: TextStyle(
                                               //fontSize: 20,
                                               ),
@@ -173,7 +185,7 @@ class HistoryScreen extends StatelessWidget {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(5),
                 ),
-                width: MediaQuery.of(context).size.width * 0.28,
+                width: MediaQuery.of(context).size.width * 0.38,
                 padding: EdgeInsets.all(16),
                 margin: EdgeInsets.all(8),
                 child: Column(
@@ -194,18 +206,31 @@ class HistoryScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Text("¿Esta seguro que desea eliminar este recorrido? "),
+              Text("Are you sure that you want to delete the route? "),
             ],
           ),
           actions: [
             TextButton(
-              child: Text('Cancelar'),
+              child: Text('Cancel'),
               onPressed: () => Navigator.pop(context),
             ),
-            ElevatedButton(
-              child: Text('Confirmar'),
-              onPressed: () =>
-                  {myController.eliminarHistory(index), Navigator.pop(context)},
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(157, 206, 255, 1),
+                    Color.fromRGBO(6, 252, 163, 1)
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: ElevatedButton(
+                child: Text('Accept'),
+                onPressed: () => {
+                  myController.eliminarHistory(index),
+                  Navigator.pop(context)
+                },
+              ),
             ),
           ],
         );
