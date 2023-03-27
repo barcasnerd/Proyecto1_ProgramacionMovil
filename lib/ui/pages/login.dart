@@ -1,18 +1,25 @@
+import 'package:blurry/blurry.dart';
+import 'package:bootstrap_alert/bootstrap_alert.dart';
+import 'package:exercise_tracker/ui/controllers/login_controller.dart';
+import 'package:exercise_tracker/ui/widgets/custom_aler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
+  static LoginController loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+    return Obx(() => Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
@@ -48,6 +55,7 @@ class LoginScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) => loginController.email.value = value,
                       keyboardType: TextInputType.emailAddress,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
@@ -77,9 +85,11 @@ class LoginScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) =>
+                          loginController.password.value = value,
                       keyboardType: TextInputType.visiblePassword,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                      obscureText: true,
+                      obscureText: loginController.visiblePassword.value,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -92,7 +102,12 @@ class LoginScreen extends StatelessWidget {
                           filled: true,
                           hintText: 'Password',
                           prefixIcon: Icon(IconlyLight.lock),
-                          suffixIcon: Icon(IconlyLight.hide)),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              loginController.togglePasswordVisibility();
+                            },
+                            child: Icon(IconlyLight.hide),
+                          )),
                     ),
                   )),
                 ],
@@ -113,8 +128,30 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: ElevatedButton.icon(
-                    onPressed: () =>
-                        {Navigator.of(context).popAndPushNamed('/home')},
+                    onPressed: () {
+                      loginController.validateEmailAndPassword(context);
+                      if (loginController.invalidCredentials.value == true) {
+                        Blurry.error(
+                          title: """Invalid credentials""",
+                          description:
+                              'Invalid email or password, please check',
+                          confirmButtonText: 'Accept',
+                          onConfirmButtonPressed: () {
+                            Navigator.pop(context);
+                          },
+                          displayCancelButton: false,
+                          titleTextStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              fontSize: windowHeight * 0.03),
+                          descriptionTextStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: windowHeight * 0.023,
+                          ),
+                          buttonTextStyle:
+                              GoogleFonts.poppins(color: Colors.white),
+                        ).show(context);
+                      }
+                    },
                     icon: Icon(
                       IconlyBold.login,
                       color: Colors.white,
@@ -175,6 +212,6 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        )));
   }
 }

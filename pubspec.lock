@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bootstrap_alert:
+    dependency: "direct main"
+    description:
+      name: bootstrap_alert
+      sha256: a14d6779be53a854739b2b5f1ca44734796847a1346d58f8509be4bb70649c2e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
