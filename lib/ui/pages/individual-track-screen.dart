@@ -53,7 +53,7 @@ class IndividualTrackScreen extends StatelessWidget {
                 width: windowWidth,
                 height: windowHeight,
                 child: Padding(
-                  padding: EdgeInsets.only(top: windowWidth * 0.08),
+                  padding: EdgeInsets.only(top: windowWidth * 0.02),
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -76,13 +76,13 @@ class IndividualTrackScreen extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: windowWidth * 0.06),
+                                      fontSize: 26),
                                 ),
                                 Text(
                                   'You can create sections on past routes \nby clicking the plus button',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
-                                      fontSize: windowWidth * 0.04,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w300),
                                 )
                               ],
@@ -96,8 +96,8 @@ class IndividualTrackScreen extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(windowHeight * 0.01),
                             child: SizedBox(
-                              width: windowWidth * 0.95,
-                              height: windowHeight * 0.6,
+                              width: windowWidth * 0.9,
+                              height: windowHeight * 0.5,
                               child: Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(windowWidth * 0.02),
