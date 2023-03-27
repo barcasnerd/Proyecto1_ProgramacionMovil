@@ -150,24 +150,6 @@ class HistoryScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () =>
-                                            {_deleteHistory(context, index)},
-                                        child: Text(
-                                          'Delete',
-                                          style: TextStyle(
-                                              //fontSize: 20,
-                                              ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors
-                                              .red, // Cambia el color del botón a rojo
-                                        ),
-                                      ),
-                                    ]),
                               ],
                             ),
                           ],
@@ -183,72 +165,6 @@ class HistoryScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: CustomNavBar(controller: controllerNav),
-    );
-  }
-
-  void _deleteHistory(BuildContext context, int index) {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                width: MediaQuery.of(context).size.width * 0.38,
-                padding: EdgeInsets.all(16),
-                margin: EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${myController.items[index]} ", // Muestra la fecha y hora del elemento
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    Text(
-                      "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Text(
-                      "${myController.duration[index]} de duracion", // Muestra el texto del elemento
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Text("Are you sure that you want to delete the route? "),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(157, 206, 255, 1),
-                    Color.fromRGBO(6, 252, 163, 1)
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: ElevatedButton(
-                child: Text('Accept'),
-                onPressed: () => {
-                  myController.eliminarHistory(index),
-                  Navigator.pop(context)
-                },
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

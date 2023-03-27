@@ -88,6 +88,7 @@ class HistoryController extends GetxController {
     items.removeAt(index);
     distance.removeAt(index);
     duration.removeAt(index);
+    Get.toNamed('/history');
   }
 
   void eliminarSection(int index) {
