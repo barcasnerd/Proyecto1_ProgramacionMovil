@@ -175,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                  'Enjoy a relaxing walk\nor a intense running\nsession, either wa\nwe will track it for you',
+                                  'Enjoy a relaxing walk\nor an intense running\nsession, either way\nwe will track it for you',
                                   style: GoogleFonts.poppins(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w200,
@@ -264,7 +264,7 @@ class HomeScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                  'Push yourself to the\nlimit and track you\nbiking goals with ou\ngreat tracker',
+                                  'Push yourself to the\nlimit and track you\nbiking goals with our\ngreat tracker',
                                   style: GoogleFonts.poppins(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w200,
