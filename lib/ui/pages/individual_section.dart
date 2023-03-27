@@ -57,7 +57,7 @@ class IndividualSection extends StatelessWidget {
                 filled: true,
                 border: InputBorder.none,
 
-                //hintText: 'Test',
+                hintText: '51.82749',
                 //prefixIcon: Icon(IconlyLight.message)
               ),
             ),
@@ -87,7 +87,7 @@ class IndividualSection extends StatelessWidget {
                 filled: true,
                 border: InputBorder.none,
 
-                //hintText: 'Test',
+                hintText: '64.23297',
                 //prefixIcon: Icon(IconlyLight.message)
               ),
             ),
