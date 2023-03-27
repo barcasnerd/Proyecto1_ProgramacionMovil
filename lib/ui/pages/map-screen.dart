@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:blurry/blurry.dart';
+import 'package:blurry/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,7 +62,7 @@ class MapScreen extends StatelessWidget {
                               child: IconButton(
                                 icon: Icon(Icons.arrow_back_ios),
                                 onPressed: () {
-                                  // Lógica al presionar el botón
+                                  _showBlurryContent(context);
                                 },
                                 color: Colors.black,
                               ),
@@ -201,7 +203,9 @@ class MapScreen extends StatelessWidget {
                           Column(
                             children: [
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  _showBlurryContent(context);
+                                },
                                 child: Container(
                                   width: windowWidth * 0.2,
                                   height: windowWidth * 0.2,
@@ -283,5 +287,28 @@ class MapScreen extends StatelessWidget {
         desiredAccuracy: LocationAccuracy.high);
     print(position.latitude);
     return position;
+  }
+
+  _showBlurryContent(context) {
+    double height = MediaQuery.of(context).size.height;
+    return Blurry(
+      icon: null,
+      themeColor: Color.fromRGBO(6, 252, 163, 1),
+      title: 'Session Finished',
+      description:
+          'Your route has been saved. You can check you past routes in the history tab',
+      confirmButtonText: 'Accept',
+      onConfirmButtonPressed: () {
+        Navigator.popAndPushNamed(context, '/home');
+      },
+      displayCancelButton: false,
+      titleTextStyle: GoogleFonts.poppins(
+          fontWeight: FontWeight.bold, fontSize: height * 0.03),
+      descriptionTextStyle: GoogleFonts.poppins(
+        fontWeight: FontWeight.w500,
+        fontSize: height * 0.023,
+      ),
+      buttonTextStyle: GoogleFonts.poppins(color: Colors.white),
+    ).show(context);
   }
 }
