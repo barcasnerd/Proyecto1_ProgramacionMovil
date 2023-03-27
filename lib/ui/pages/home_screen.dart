@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: windowHeight * 0.007),
                     child: Text(
                       'Or maybe you want to run?\npick whatever you wanna do below ',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.poppins(color: Colors.grey,
                           fontSize: windowWidth * 0.05,
                           fontWeight: FontWeight.w300),
                       textAlign: TextAlign.center,
@@ -177,8 +177,8 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                   'Enjoy a relaxing walk\nor a intense running\nsession, either wa\nwe will track it for you',
                                   style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w200,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w300,
                                       fontSize: windowWidth * 0.04))
                             ],
                           )
@@ -264,8 +264,8 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                   'Push yourself to the\nlimit and track you\nbiking goals with ou\ngreat tracker',
                                   style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w200,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
                                       fontSize: windowWidth * 0.04))
                             ],
                           )
@@ -300,9 +300,8 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(windowWidth * 0.87, windowHeight * 0.2),
+                    minimumSize: Size(windowWidth * 0.87, windowHeight * 0.2), backgroundColor: Colors.transparent,
                     maximumSize: Size(windowWidth * 0.87, windowHeight * 0.2),
-                    primary: Colors.transparent,
                     shadowColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
