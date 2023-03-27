@@ -1,3 +1,4 @@
+import 'package:exercise_tracker/ui/pages/complete_profile_screen.dart';
 import 'package:exercise_tracker/ui/pages/draft_page.dart';
 import 'package:exercise_tracker/ui/pages/history-screen.dart';
 import 'package:exercise_tracker/ui/pages/home_screen.dart';
@@ -16,14 +17,15 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Exercise Tracker',
-      initialRoute: "/",
+      initialRoute: "/login",
       routes: {
-        "/": (context) => const DraftScreen(),
+        // "/": (context) => const DraftScreen(),
         "/login": (context) => const LoginScreen(),
-        "/register":(context) => const RegisterScreen(),
+        "/register": (context) => const RegisterScreen(),
+        "/completeProfile": (context) => const CompleteProfileScreen(),
         "/home": (context) => const HomeScreen(),
         "/route": (context) => RouteScreen(),
-        "/map": (context) => const MapScreen(),
+        "/map": (context) => MapScreen(),
         "/history": (context) => const HistoryScreen(),
         "/profile": (context) => const ProfileScreen(),
         "/individualTrack": (context) => const IndividualTrackScreen(),

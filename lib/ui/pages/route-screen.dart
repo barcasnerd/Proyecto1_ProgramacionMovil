@@ -29,7 +29,8 @@ class RouteScreen extends StatelessWidget {
                       bottom: windowHeight * 0.005),
                   child: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => {Navigator.pop(context)},
+                    onPressed: () =>
+                        {Navigator.popAndPushNamed(context, '/home')},
                   ),
                 ),
                 Padding(
