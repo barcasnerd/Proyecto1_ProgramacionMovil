@@ -14,6 +14,6 @@ class NavController extends GetxController {
 
   void changePage(int index) {
     currentIndex.value = index;
-    Get.toNamed(routes[index]['route']);
+    Get.offAndToNamed(routes[index]['route']);
   }
 }

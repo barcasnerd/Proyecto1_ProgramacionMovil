@@ -153,7 +153,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton.icon(
                   onPressed: () =>
-                      {Navigator.of(context).popAndPushNamed('/route')},
+                      {Navigator.of(context).popAndPushNamed('/map')},
                   icon: Icon(null),
                   label: Row(
                     children: [
@@ -189,26 +189,24 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Row(children: [
                             Padding(
-                                padding: EdgeInsets.only(
-                                    left: windowWidth * 0.05, top: 0, right: 0),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: SizedBox.fromSize(
-                                    size: Size.fromRadius(40),
-                                    child: ColorFiltered(
-                                      colorFilter: const ColorFilter.mode(
-                                        Color.fromRGBO(250, 250, 250, 0),
-                                        BlendMode.saturation,
-                                      ),
-                                      child: Image(
-                                        //fit: BoxFit.cover,
-                                        image: const AssetImage(
-                                            'assets/images/run_logo.png'),
-                                        width: windowWidth * 0.7,
-                                      ),
-                                    ),
+                              padding: EdgeInsets.only(
+                                  left: windowWidth * 0.05, top: 0, right: 0),
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(40),
+                                child: ColorFiltered(
+                                  colorFilter: const ColorFilter.mode(
+                                    Color.fromRGBO(250, 250, 250, 0),
+                                    BlendMode.saturation,
                                   ),
-                                )),
+                                  child: Image(
+                                    //fit: BoxFit.cover,
+                                    image: const AssetImage(
+                                        'assets/images/run_logo.png'),
+                                    width: windowWidth * 0.7,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ])
                         ],
                       )
@@ -242,7 +240,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton.icon(
                   onPressed: () =>
-                      {Navigator.of(context).popAndPushNamed('/route')},
+                      {Navigator.of(context).popAndPushNamed('/map')},
                   icon: Icon(null),
                   label: Row(
                     children: [
@@ -278,26 +276,24 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Row(children: [
                             Padding(
-                                padding: EdgeInsets.only(
-                                    left: windowWidth * 0.05, top: 0, right: 0),
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: SizedBox.fromSize(
-                                    size: Size.fromRadius(46),
-                                    child: ColorFiltered(
-                                      colorFilter: const ColorFilter.mode(
-                                        Color.fromRGBO(250, 250, 250, 0),
-                                        BlendMode.saturation,
-                                      ),
-                                      child: Image(
-                                        //fit: BoxFit.cover,
-                                        image: const AssetImage(
-                                            'assets/images/bike_logo.png'),
-                                        width: windowWidth * 0.7,
-                                      ),
-                                    ),
+                              padding: EdgeInsets.only(
+                                  left: windowWidth * 0.05, top: 0, right: 0),
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(46),
+                                child: ColorFiltered(
+                                  colorFilter: const ColorFilter.mode(
+                                    Color.fromRGBO(250, 250, 250, 0),
+                                    BlendMode.saturation,
                                   ),
-                                )),
+                                  child: Image(
+                                    //fit: BoxFit.cover,
+                                    image: const AssetImage(
+                                        'assets/images/bike_logo.png'),
+                                    width: windowWidth * 0.7,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ])
                         ],
                       )
