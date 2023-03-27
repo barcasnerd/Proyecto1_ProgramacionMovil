@@ -49,7 +49,7 @@ class HistoryScreen extends StatelessWidget {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.475,
+                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.4,
                           0), // Agrega un padding de 8 píxeles alrededor del texto
 
                       child: Text(value),
