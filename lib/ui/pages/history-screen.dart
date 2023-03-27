@@ -1,68 +1,85 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/history_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
   static HistoryController myController = Get.put(HistoryController());
   static NavController controllerNav = Get.put(NavController());
+
   @override
   Widget build(BuildContext context) {
+    String _selectedValue;
+    double windowHeight = MediaQuery.of(context).size.height;
+    double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Historial'),
-      ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width * 0.45,
-                child: TextField(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2.0, // Ancho del borde
-                        color: Colors.blue, // Color del borde
-                      ),
+          Text('History',
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: windowHeight * 0.04))),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Latest Activity',
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: windowHeight * 0.02))),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Color.fromARGB(250, 247, 248, 248),
+            ),
+            width: windowWidth * 0.8,
+            child: Obx(
+              () => DropdownButton<String>(
+                value: myController.selectedItem.value,
+                items: myController.sections.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.475,
+                          0), // Agrega un padding de 8 píxeles alrededor del texto
+
+                      child: Text(value),
                     ),
-                    hintText:
-                        'Tramo A', // Texto que aparece como sugerencia en el campo
-                    prefixIcon: Icon(Icons
-                        .search), // Icono que aparece a la izquierda del campo
-                  ),
-                ),
+                  );
+                }).toList(),
+                onChanged: (newValue) {
+                  log("Hice cambio ${newValue}");
+                  _selectedValue = newValue ?? "";
+                  myController.setSelectedItem(_selectedValue);
+                },
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                underline: Container(),
               ),
-              Container(
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.all(8),
-                width: MediaQuery.of(context).size.width * 0.45,
-                child: TextField(
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
-                        width: 2.0, // Ancho del borde
-                        color: Colors.blue, // Color del borde
-                      ),
-                    ),
-                    hintText:
-                        'Tramo B', // Texto que aparece como sugerencia en el campo
-                    prefixIcon: Icon(Icons
-                        .search), // Icono que aparece a la izquierda del campo
-                  ),
-                ),
+            ),
+          ),
+
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
+              child: GestureDetector(
+                onTap: () {
+                  myController.changePage(0, 2);
+                },
+                child: Text('View all activities',
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: windowHeight * 0.018))),
               ),
-            ],
+            ),
           ),
           Expanded(
             child: Obx(
@@ -70,55 +87,73 @@ class HistoryScreen extends StatelessWidget {
                 itemCount: myController.items.length,
                 itemBuilder: (context, index) {
                   return Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      padding: EdgeInsets.all(16),
-                      margin: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${myController.items[index]} ", // Muestra la fecha y hora del elemento
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                          Text(
-                            "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            "${myController.duration[index]} de duracion", // Muestra el texto del elemento
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () =>
-                                      {_deleteHistory(context, index)},
-                                  child: Text(
-                                    'Eliminar Recorrido',
-                                    style: TextStyle(
-                                        //fontSize: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        myController.changePage(index, 1);
+                        print('El container fue presionado');
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(30, 158, 158, 158),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        padding: EdgeInsets.all(16),
+                        margin: EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(10, 25, 20, 25),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  myController.type[index]
+                                      ? Icon(
+                                          Icons.directions_bike_rounded,
+                                          size: 40,
+                                        )
+                                      : Icon(
+                                          Icons.accessibility_rounded,
+                                          size: 40,
                                         ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors
-                                        .red, // Cambia el color del botón a rojo
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${myController.items[index]} ", // Muestra la fecha y hora del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall,
+                                      ),
+                                      Text(
+                                        "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                      Text(
+                                        "${myController.duration[index]} de duracion", // Muestra el texto del elemento
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(width: 10),
-                                ElevatedButton(
-                                  child: Text('Ver Mapa'),
-                                  onPressed: () {
-                                    myController.changePage(index);
-                                  },
-                                ),
-                              ]),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -130,59 +165,6 @@ class HistoryScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: CustomNavBar(controller: controllerNav),
-    );
-  }
-
-  void _deleteHistory(BuildContext context, int index) {
-    showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                width: MediaQuery.of(context).size.width * 0.28,
-                padding: EdgeInsets.all(16),
-                margin: EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${myController.items[index]} ", // Muestra la fecha y hora del elemento
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    Text(
-                      "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Text(
-                      "${myController.duration[index]} de duracion", // Muestra el texto del elemento
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Text("¿Esta seguro que desea eliminar este recorrido? "),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            ElevatedButton(
-              child: Text('Confirmar'),
-              onPressed: () =>
-                  {myController.eliminarHistory(index), Navigator.pop(context)},
-            ),
-          ],
-        );
-      },
     );
   }
 }
