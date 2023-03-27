@@ -6,13 +6,17 @@ class LoginController extends GetxController {
   var password = "".obs;
   var visiblePassword = true.obs;
   var invalidCredentials = false.obs;
+  var isLogged = false.obs;
 
   void togglePasswordVisibility() {
     visiblePassword.value = !visiblePassword.value;
   }
 
   void validateEmailAndPassword(BuildContext context) {
-    if (password.value == "q" && email.value == "q") {
+    // TODO: validate email format
+    // TODO: validate password format
+
+    if (email.value == "admin@admin.com" && password.value == "admin") {
       invalidCredentials.value = false;
       Navigator.popAndPushNamed(context, '/home');
     } else {
