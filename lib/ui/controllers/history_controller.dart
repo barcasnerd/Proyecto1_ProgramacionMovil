@@ -74,7 +74,6 @@ class HistoryController extends GetxController {
   }
 
   var selectedItem = "Buenavista".obs;
-  final RxList<String> myList = ["Option 1", "Option 2", "Option 3", "xd"].obs;
 
   void setSelectedItem(String value) {
     log("Ejecuto ${value}");
@@ -89,6 +88,10 @@ class HistoryController extends GetxController {
     items.removeAt(index);
     distance.removeAt(index);
     duration.removeAt(index);
+  }
+
+  void eliminarSection(int index) {
+    sections.removeAt(index);
   }
 
   void changePage(int index, int dir) {

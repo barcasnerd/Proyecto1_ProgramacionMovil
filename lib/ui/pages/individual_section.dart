@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
+import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import '../controllers/history_controller.dart';
 import '../controllers/nav_controller.dart';
 
@@ -101,8 +102,10 @@ class IndividualSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: ElevatedButton.icon(
-                      onPressed: () =>
-                          {Navigator.of(context).popAndPushNamed('/home')},
+                      onPressed: () => {
+                        myController.eliminarSection(index),
+                        Navigator.pop(context)
+                      },
                       icon: Icon(
                         IconlyBold.password,
                         color: Colors.white,
@@ -169,6 +172,7 @@ class IndividualSection extends StatelessWidget {
           ),
         ]),
       ),
+      bottomNavigationBar: CustomNavBar(controller: controllerNav),
     );
   }
 }
