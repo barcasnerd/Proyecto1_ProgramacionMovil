@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/history_controller.dart';
+import '../controllers/section_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Sections extends StatelessWidget {
   const Sections({super.key});
-  static HistoryController myController = Get.put(HistoryController());
+  static SectionController mySection = Get.put(SectionController());
   static NavController controllerNav = Get.put(NavController());
 
   @override
@@ -43,12 +43,12 @@ class Sections extends StatelessWidget {
                   Expanded(
                     child: Obx(
                       () => ListView.builder(
-                        itemCount: myController.sections.length,
+                        itemCount: mySection.sections.length,
                         itemBuilder: (context, index) {
                           return Center(
                             child: GestureDetector(
                               onTap: () {
-                                myController.changePage(index, 3);
+                                mySection.changePage(index, 3);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -86,17 +86,10 @@ class Sections extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "${myController.sections[index]} ", // Muestra la fecha y hora del elemento
+                                                "${mySection.sections[index]} ",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headlineSmall,
-                                              ),
-                                              Text(
-                                                myController.items[
-                                                    index], // Muestra el texto del elemento
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
                                               ),
                                             ],
                                           ),

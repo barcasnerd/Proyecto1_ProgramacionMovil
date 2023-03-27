@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../controllers/section_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconly/iconly.dart';
@@ -16,6 +17,7 @@ import 'package:iconly/iconly.dart';
 class IndividualTrackScreen extends StatelessWidget {
   const IndividualTrackScreen({super.key});
   static HistoryController myController = Get.put(HistoryController());
+  static SectionController mySection = Get.put(SectionController());
   static NavController controllerNav = Get.put(NavController());
   static CameraPosition _initialPosition =
       CameraPosition(target: LatLng(26.8206, 30.8025), zoom: 10.0);
@@ -76,7 +78,7 @@ class IndividualTrackScreen extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 26),
+                                      fontSize: 32),
                                 ),
                                 Text(
                                   'You can create sections on past routes \nby clicking the plus button',

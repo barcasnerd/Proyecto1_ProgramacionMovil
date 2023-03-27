@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
-import '../controllers/history_controller.dart';
+import '../controllers/section_controller.dart';
 import '../controllers/nav_controller.dart';
 
 class IndividualSection extends StatelessWidget {
   const IndividualSection({super.key});
-  static HistoryController myController = Get.put(HistoryController());
+  static SectionController mySection = Get.put(SectionController());
   static NavController controllerNav = Get.put(NavController());
 
   @override
@@ -21,7 +21,7 @@ class IndividualSection extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: Column(children: [
-          Text(myController.sections[index],
+          Text(mySection.sections[index],
               style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class IndividualSection extends StatelessWidget {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () => {
-                        myController.eliminarSection(index),
+                        mySection.eliminarSection(index),
                         Navigator.pop(context)
                       },
                       icon: Icon(
