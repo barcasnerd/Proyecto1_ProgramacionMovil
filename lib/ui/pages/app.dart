@@ -11,6 +11,8 @@ import 'package:exercise_tracker/ui/pages/sections.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'individual_section.dart';
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class App extends StatelessWidget {
         "/profile": (context) => const ProfileScreen(),
         "/individualTrack": (context) => const IndividualTrackScreen(),
         "/sections": (context) => const Sections(),
+        "/individualSection": (context) => const IndividualSection(),
       },
     );
   }

@@ -91,9 +91,17 @@ class HistoryController extends GetxController {
     duration.removeAt(index);
   }
 
-  void changePage(int index) {
+  void changePage(int index, int dir) {
     //Get.toNamed('route': '/individualTrack', 'page': const IndividualTrackScreen());
-    Get.toNamed('/individualTrack', arguments: index);
+    if (dir == 1) {
+      Get.toNamed('/individualTrack', arguments: index);
+    } else {
+      if (dir == 2) {
+        Get.toNamed('/sections');
+      } else {
+        Get.toNamed('/individualSection', arguments: index);
+      }
+    }
   }
 
   void changePageSections() {

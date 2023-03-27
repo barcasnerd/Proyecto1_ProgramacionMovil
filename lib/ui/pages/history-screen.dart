@@ -73,8 +73,7 @@ class HistoryScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
               child: GestureDetector(
                 onTap: () {
-                  myController.changePageSections();
-                  print('El Texto fue presionado');
+                  myController.changePage(0, 2);
                 },
                 child: Text('View all activities',
                     style: GoogleFonts.poppins(
@@ -90,7 +89,7 @@ class HistoryScreen extends StatelessWidget {
                   return Center(
                     child: GestureDetector(
                       onTap: () {
-                        myController.changePage(index);
+                        myController.changePage(index, 1);
                         print('El container fue presionado');
                       },
                       child: Container(

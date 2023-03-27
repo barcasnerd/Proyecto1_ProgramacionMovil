@@ -38,6 +38,10 @@ class DraftScreen extends StatelessWidget {
             ElevatedButton(
                 onPressed: () => {Navigator.of(context).pushNamed("/sections")},
                 child: const Text("Sections")),
+            ElevatedButton(
+                onPressed: () =>
+                    {Navigator.of(context).pushNamed("/individualSection")},
+                child: const Text("individualSections")),
           ],
         ),
       ),

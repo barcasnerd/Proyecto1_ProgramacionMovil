@@ -48,8 +48,7 @@ class Sections extends StatelessWidget {
                           return Center(
                             child: GestureDetector(
                               onTap: () {
-                                myController.changePage(index);
-                                print('El container fue presionado');
+                                myController.changePage(index, 3);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
