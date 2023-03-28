@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
-
 import '../controllers/user_controller.dart';
+import 'package:flutter/foundation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,6 +18,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
+    ImageProvider<Object> customImage = kIsWeb == false
+        ? NetworkImage(userController.currentUser.value.profileImageUrl)
+        : AssetImage('assets/images/profile_pic.png') as ImageProvider<Object>;
 
     return Obx(() => Scaffold(
           body: Column(
@@ -99,10 +102,7 @@ class HomeScreen extends StatelessWidget {
                                       child: Image(
                                           fit: BoxFit.cover,
                                           //image: const AssetImage('assets/images/profile_pic.png')),
-                                          image: NetworkImage(userController
-                                              .currentUser
-                                              .value
-                                              .profileImageUrl)),
+                                          image: customImage),
                                     ),
                                   ),
                                 )),

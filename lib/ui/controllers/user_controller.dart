@@ -29,14 +29,16 @@ class UserController extends GetxController {
     return null;
   }
 
-  void addUser(User user) {
-    fetchNameFromUrl(
-            'https://this-person-does-not-exist.com/en?new=1679983211425&gender=all&age=all&etnic=all')
-        .then((result) {
-      user.profileImageUrl = result;
-    }).catchError((e) => print(e));
-    print(user.profileImageUrl);
-    users.add(user);
+  void addUser(User user) async {
+    try {
+      user.profileImageUrl = await fetchNameFromUrl(
+          'https://this-person-does-not-exist.com/en?new=1679983211425&gender=all&age=all&etnic=all');
+      print(user.profileImageUrl);
+      users.add(user);
+    } catch (e) {
+      print(user.profileImageUrl);
+      users.add(user);
+    }
   }
 
   Future<String> fetchNameFromUrl(String url) async {
@@ -47,7 +49,7 @@ class UserController extends GetxController {
       var name = data['name'];
       return 'https://this-person-does-not-exist.com/img/$name';
     } else {
-      throw Exception('Failed to fetch data');
+      return "https://this-person-does-not-exist.com/img/avatar-gen11571b13d1ed1c76e1411b91391b343c.jpg";
     }
   }
 }
