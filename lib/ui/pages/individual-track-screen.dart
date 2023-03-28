@@ -199,7 +199,10 @@ class IndividualTrackScreen extends StatelessWidget {
                             Column(
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                  mySection.changePage(index, 4);
+                                  print("Indice: ${index}");
+                                  },
                                   child: Container(
                                     width: windowWidth * 0.2,
                                     height: windowWidth * 0.2,

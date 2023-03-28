@@ -77,8 +77,13 @@ class HistoryController extends GetxController {
       if (dir == 2) {
         Get.toNamed('/sections');
       } else {
+        if (dir == 3) {
         Get.toNamed('/individualSection', arguments: index);
+      }else{
+        Get.toNamed('/sectionCreator');
       }
+      }
+      
     }
   }
 

@@ -159,8 +159,7 @@ class IndividualSection extends StatelessWidget {
                       ),
                       style: ElevatedButton.styleFrom(
                         minimumSize:
-                            Size(windowWidth * 0.5, windowHeight * 0.06),
-                        primary: Colors.transparent,
+                            Size(windowWidth * 0.5, windowHeight * 0.06), backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
