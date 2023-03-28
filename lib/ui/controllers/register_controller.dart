@@ -1,6 +1,9 @@
+import 'package:exercise_tracker/ui/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../models/user_model.dart';
 
 class RegisterController extends GetxController {
   var firstName = "".obs;
@@ -15,12 +18,16 @@ class RegisterController extends GetxController {
   var invalidCredentials = false.obs;
   TextEditingController genderEditingController = TextEditingController();
   TextEditingController dateEditingController = TextEditingController();
+  static UserController userController = Get.put(UserController());
 
   void validateCreateAccount(BuildContext context) {
+    var foundUser = userController.getUserByEmail(email.value.toLowerCase());
+    print(foundUser);
     invalidCredentials.value = !validateEmail(email.value) ||
         !validatePassword(password.value) ||
         !validateName(firstName.value) ||
-        !validateName(lastName.value);
+        !validateName(lastName.value) ||
+        foundUser != null;
     print('📄${invalidCredentials.value}');
     if (invalidCredentials.value == false) {
       Navigator.popAndPushNamed(context, '/completeProfile');
@@ -41,16 +48,28 @@ class RegisterController extends GetxController {
       invalidCredentials.value = true;
     } else {
       print({
-        firstName,
+        firstName.value,
         lastName,
         email,
         password,
         gender,
-        birth,
+        birth.value,
         weight,
         height
       });
-      invalidCredentials.value = true;
+      invalidCredentials.value = false;
+      var user = User(
+          firstName.value,
+          lastName.value,
+          email.value.toLowerCase(),
+          password.value,
+          gender.value,
+          DateTime.parse(birth.value),
+          double.parse(weight.value),
+          double.parse(height.value));
+      userController.addUser(user);
+      userController.currentUser.value =
+          userController.getUserByEmail(user.email)!;
       resetVariables();
       Navigator.popAndPushNamed(context, '/home');
     }

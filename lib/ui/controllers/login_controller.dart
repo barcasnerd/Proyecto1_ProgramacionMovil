@@ -1,3 +1,4 @@
+import 'package:exercise_tracker/ui/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ class LoginController extends GetxController {
   var visiblePassword = true.obs;
   var invalidCredentials = false.obs;
   var isLogged = false.obs;
+  static UserController userController = Get.put(UserController());
 
   void togglePasswordVisibility() {
     visiblePassword.value = !visiblePassword.value;
@@ -16,8 +18,13 @@ class LoginController extends GetxController {
     invalidCredentials.value =
         !validateEmail(email.value) || !validatePassword(password.value);
     print('📄${invalidCredentials.value}');
-    if (email.value == "admin@admin.com" && password.value == "admin") {
+    if (userController.getUserByEmailAndPassword(
+            email.value.toLowerCase(), password.value) !=
+        null) {
       invalidCredentials.value = false;
+      userController.currentUser.value =
+          userController.getUserByEmailAndPassword(
+              email.value.toLowerCase(), password.value)!;
       resetVariables();
       Navigator.popAndPushNamed(context, '/home');
     } else {
