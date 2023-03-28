@@ -13,10 +13,10 @@ class LoginController extends GetxController {
   }
 
   void validateEmailAndPassword(BuildContext context) {
-    // TODO: validate email format
-    invalidCredentials.value = !validateEmail(email.value);
-    // TODO: validate password format
-    invalidCredentials.value = !validatePassword(password.value);
+    // TODO: validate email and password format
+    invalidCredentials.value =
+        !validateEmail(email.value) || !validatePassword(password.value);
+    print('📄${invalidCredentials.value}');
 
     // TODO: remove this lines for actual data
     if (email.value == "admin@admin.com" && password.value == "admin") {

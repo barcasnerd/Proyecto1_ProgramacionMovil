@@ -1,3 +1,4 @@
+import 'package:blurry/blurry.dart';
 import 'package:exercise_tracker/ui/controllers/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,14 +8,14 @@ import 'package:iconly/iconly.dart';
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
-  static RegisterController controller = Get.put(RegisterController());
+  static RegisterController registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+    return Obx(() => Scaffold(
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
@@ -40,6 +41,9 @@ class RegisterScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.firstName.value = value;
+                      },
                       keyboardType: TextInputType.name,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
@@ -69,6 +73,9 @@ class RegisterScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.lastName.value = value;
+                      },
                       keyboardType: TextInputType.name,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
@@ -98,6 +105,9 @@ class RegisterScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.email.value = value;
+                      },
                       keyboardType: TextInputType.emailAddress,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
@@ -127,9 +137,12 @@ class RegisterScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.password.value = value;
+                      },
                       keyboardType: TextInputType.emailAddress,
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                      obscureText: true,
+                      obscureText: registerController.visiblePassword.value,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -142,7 +155,12 @@ class RegisterScreen extends StatelessWidget {
                           filled: true,
                           hintText: 'Password',
                           prefixIcon: Icon(IconlyLight.lock),
-                          suffixIcon: Icon(IconlyLight.hide)),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              registerController.togglePasswordVisibility();
+                            },
+                            child: Icon(IconlyLight.hide),
+                          )),
                     ),
                   )),
                 ],
@@ -163,8 +181,29 @@ class RegisterScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: ElevatedButton.icon(
-                    onPressed: () => {
-                      Navigator.of(context).popAndPushNamed('/completeProfile')
+                    onPressed: () {
+                      registerController.validateCreateAccount(context);
+                      if (registerController.invalidCredentials.value == true) {
+                        Blurry.error(
+                          title: """Invalid fields""",
+                          description:
+                              'Invalid fields, please check and try again',
+                          confirmButtonText: 'Accept',
+                          onConfirmButtonPressed: () {
+                            Navigator.pop(context);
+                          },
+                          displayCancelButton: false,
+                          titleTextStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              fontSize: windowHeight * 0.03),
+                          descriptionTextStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: windowHeight * 0.023,
+                          ),
+                          buttonTextStyle:
+                              GoogleFonts.poppins(color: Colors.white),
+                        ).show(context);
+                      }
                     },
                     icon: Icon(null),
                     label: Text(
@@ -221,6 +260,6 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        )));
   }
 }
