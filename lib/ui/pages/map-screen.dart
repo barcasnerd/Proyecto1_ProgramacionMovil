@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:blurry/blurry.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,13 +22,62 @@ class MapScreen extends StatelessWidget {
       future: _determinePosition(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Dialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
-                child: Text('Erorr'),
-              ));
+          return Center(
+              child: BlurryContainer(
+            child: Center(
+              child: AlertDialog(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Icon(
+                        Icons.warning_amber_rounded,
+                        color: Colors.amber[300],
+                        size: windowWidth * 0.08,
+                      ),
+                    ),
+                    Text(
+                      "Location Permission",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: windowHeight * 0.026),
+                    )
+                  ],
+                ),
+                content: Text(
+                  "Location service is disabled or blocked. Please, enable locationd and allow location permissions to continue",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: windowHeight * 0.02),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(
+                      'Cerrar',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: windowHeight * 0.023,
+                          color: Colors.amber[300]),
+                    ),
+                    onPressed: () {
+                      // Cerrar el modal
+                      Navigator.popAndPushNamed(context, '/home');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            blur: 2,
+            width: windowWidth,
+            height: windowHeight,
+            elevation: 50,
+            color: Colors.transparent,
+            padding: const EdgeInsets.all(8),
+            borderRadius: const BorderRadius.all(Radius.circular(100)),
+          ));
         } else if (snapshot.hasData) {
           BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
           BitmapDescriptor.fromAssetImage(
@@ -41,7 +91,7 @@ class MapScreen extends StatelessWidget {
               width: windowWidth,
               height: windowHeight,
               child: Padding(
-                padding: EdgeInsets.only(top: windowWidth * 0.08),
+                padding: EdgeInsets.only(top: windowWidth * 0.1),
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -52,7 +102,7 @@ class MapScreen extends StatelessWidget {
                             padding: EdgeInsets.only(left: windowWidth * 0.03),
                             child: Ink(
                               decoration: ShapeDecoration(
-                                color: Colors.grey[200],
+                                color: Colors.transparent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -60,7 +110,27 @@ class MapScreen extends StatelessWidget {
                               child: IconButton(
                                 icon: Icon(Icons.arrow_back_ios),
                                 onPressed: () {
-                                  // Lógica al presionar el botón
+                                  Blurry.warning(
+                                    //icon: null,
+                                    //themeColor: Color.fromRGBO(6, 252, 163, 1),
+                                    title: """Session finished""",
+                                    description: "You route won't be saved",
+                                    confirmButtonText: 'Confirm',
+                                    onConfirmButtonPressed: () {
+                                      Navigator.popAndPushNamed(
+                                          context, '/home');
+                                    },
+                                    onCancelButtonPressed: () {},
+                                    titleTextStyle: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: windowHeight * 0.03),
+                                    descriptionTextStyle: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: windowHeight * 0.023,
+                                    ),
+                                    buttonTextStyle: GoogleFonts.poppins(
+                                        color: Colors.white),
+                                  ).show(context);
                                 },
                                 color: Colors.black,
                               ),
@@ -201,7 +271,30 @@ class MapScreen extends StatelessWidget {
                           Column(
                             children: [
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Blurry.success(
+                                    //icon: null,
+                                    //themeColor: Color.fromRGBO(6, 252, 163, 1),
+                                    title: """Session Finished""",
+                                    description:
+                                        'Your route has been saved. You can check your past routes in the history tab',
+                                    confirmButtonText: 'Accept',
+                                    onConfirmButtonPressed: () {
+                                      Navigator.popAndPushNamed(
+                                          context, '/home');
+                                    },
+                                    displayCancelButton: false,
+                                    titleTextStyle: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: windowHeight * 0.03),
+                                    descriptionTextStyle: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: windowHeight * 0.023,
+                                    ),
+                                    buttonTextStyle: GoogleFonts.poppins(
+                                        color: Colors.white),
+                                  ).show(context);
+                                },
                                 child: Container(
                                   width: windowWidth * 0.2,
                                   height: windowWidth * 0.2,
@@ -241,47 +334,26 @@ class MapScreen extends StatelessWidget {
     ));
   }
 
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services
       return Future.error('Location services are disabled.');
     }
-
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         return Future.error('Location permissions are denied');
       }
     }
-
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print(position.latitude);
     return position;
   }
 }
