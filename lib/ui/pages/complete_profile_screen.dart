@@ -151,8 +151,8 @@ class CompleteProfileScreen extends StatelessWidget {
                         final newDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2100));
+                            lastDate: DateTime.now(),
+                            firstDate: DateTime(1950));
                         registerController.changeDateValue(newDate!);
                       },
                       readOnly: true,
