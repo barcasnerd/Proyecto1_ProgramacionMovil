@@ -4,4 +4,3 @@
 // dibujar recorrido de una actividad
 // dinujar un tramo
 
-

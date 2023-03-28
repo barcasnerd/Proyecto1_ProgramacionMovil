@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,17 +42,7 @@ class HistoryController extends GetxController {
     false,
     true
   ];
-  final List<String> sections = [
-    "Buenavista",
-    "Mi Casa",
-    "Puente Pumarejo",
-    "Adelita",
-    "La 30",
-    "Circunvalar",
-    "Corredor",
-    "im",
-    "done",
-  ].obs;
+
   void _setItems(List<String> value) {
     this.items.value = value;
   }
@@ -73,26 +62,11 @@ class HistoryController extends GetxController {
     ]);
   }
 
-  var selectedItem = "Buenavista".obs;
-
-  void setSelectedItem(String value) {
-    log("Ejecuto ${value}");
-    selectedItem.value = value;
-    this.selectedItem.value = value;
-    log("${selectedItem}");
-
-    update();
-  }
-
   void eliminarHistory(int index) {
     items.removeAt(index);
     distance.removeAt(index);
     duration.removeAt(index);
     Get.toNamed('/history');
-  }
-
-  void eliminarSection(int index) {
-    sections.removeAt(index);
   }
 
   void changePage(int index, int dir) {
@@ -103,12 +77,32 @@ class HistoryController extends GetxController {
       if (dir == 2) {
         Get.toNamed('/sections');
       } else {
-        Get.toNamed('/individualSection', arguments: index);
+        if (dir == 3) {
+          Get.toNamed('/individualSection', arguments: index);
+        } else {
+          Get.toNamed('/sectionCreator');
+        }
       }
     }
   }
 
   void changePageSections() {
     Get.toNamed('/sections');
+  }
+
+  RxList<String> getActivities() {
+    return items;
+  }
+
+  List<String> getDuration() {
+    return duration;
+  }
+
+  List<String> getDistance() {
+    return distance;
+  }
+
+  List<bool> getType() {
+    return type;
   }
 }

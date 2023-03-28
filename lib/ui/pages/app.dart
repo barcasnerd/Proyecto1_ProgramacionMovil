@@ -8,6 +8,7 @@ import 'package:exercise_tracker/ui/pages/map-screen.dart';
 import 'package:exercise_tracker/ui/pages/profile-screen.dart';
 import 'package:exercise_tracker/ui/pages/register_screen.dart';
 import 'package:exercise_tracker/ui/pages/route-screen.dart';
+import 'package:exercise_tracker/ui/pages/section_creator.dart';
 import 'package:exercise_tracker/ui/pages/sections.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,17 @@ class App extends StatelessWidget {
         "/individualTrack": (context) => const IndividualTrackScreen(),
         "/sections": (context) => const Sections(),
         "/individualSection": (context) => const IndividualSection(),
+        "/sectionCreator": (context) => const SectionCreator(),
       },
+       onUnknownRoute: (settings) {
+    return MaterialPageRoute(
+      builder: (context) => Scaffold(
+        body: Center(
+          child: Text('Page not found'),
+        ),
+      ),
     );
+  },
+);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/history_controller.dart';
+import '../controllers/section_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
   static HistoryController myController = Get.put(HistoryController());
+  static SectionController mySection = Get.put(SectionController());
   static NavController controllerNav = Get.put(NavController());
 
   @override
@@ -44,14 +46,12 @@ class HistoryScreen extends StatelessWidget {
             width: windowWidth * 0.8,
             child: Obx(
               () => DropdownButton<String>(
-                value: myController.selectedItem.value,
-                items: myController.sections.map((String value) {
+                value: mySection.selectedItem.value,
+                items: mySection.sections.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.475,
-                          0), // Agrega un padding de 8 píxeles alrededor del texto
-
+                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.4, 0),
                       child: Text(value),
                     ),
                   );
@@ -59,7 +59,7 @@ class HistoryScreen extends StatelessWidget {
                 onChanged: (newValue) {
                   log("Hice cambio ${newValue}");
                   _selectedValue = newValue ?? "";
-                  myController.setSelectedItem(_selectedValue);
+                  mySection.setSelectedItem(_selectedValue);
                 },
                 style: TextStyle(color: Colors.black, fontSize: 16),
                 underline: Container(),
@@ -73,7 +73,7 @@ class HistoryScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
               child: GestureDetector(
                 onTap: () {
-                  myController.changePage(0, 2);
+                  mySection.changePage(0, 2);
                 },
                 child: Text('View all activities',
                     style: GoogleFonts.poppins(
@@ -130,19 +130,19 @@ class HistoryScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${myController.items[index]} ", // Muestra la fecha y hora del elemento
+                                        "${myController.items[index]} ",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headlineSmall,
                                       ),
                                       Text(
-                                        "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
+                                        "${myController.distance[index]} Km recorridos",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
                                       ),
                                       Text(
-                                        "${myController.duration[index]} de duracion", // Muestra el texto del elemento
+                                        "${myController.duration[index]} de duracion",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
