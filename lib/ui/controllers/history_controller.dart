@@ -78,12 +78,11 @@ class HistoryController extends GetxController {
         Get.toNamed('/sections');
       } else {
         if (dir == 3) {
-        Get.toNamed('/individualSection', arguments: index);
-      }else{
-        Get.toNamed('/sectionCreator');
+          Get.toNamed('/individualSection', arguments: index);
+        } else {
+          Get.toNamed('/sectionCreator');
+        }
       }
-      }
-      
     }
   }
 
@@ -93,5 +92,17 @@ class HistoryController extends GetxController {
 
   RxList<String> getActivities() {
     return items;
+  }
+
+  List<String> getDuration() {
+    return duration;
+  }
+
+  List<String> getDistance() {
+    return distance;
+  }
+
+  List<bool> getType() {
+    return type;
   }
 }

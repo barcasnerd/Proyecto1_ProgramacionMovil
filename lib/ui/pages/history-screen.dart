@@ -51,9 +51,7 @@ class HistoryScreen extends StatelessWidget {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.4,
-                          0), // Agrega un padding de 8 píxeles alrededor del texto
-
+                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.4, 0),
                       child: Text(value),
                     ),
                   );
@@ -132,19 +130,19 @@ class HistoryScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${myController.items[index]} ", // Muestra la fecha y hora del elemento
+                                        "${myController.items[index]} ",
                                         style: Theme.of(context)
                                             .textTheme
                                             .headlineSmall,
                                       ),
                                       Text(
-                                        "${myController.distance[index]} Km recorridos", // Muestra el texto del elemento
+                                        "${myController.distance[index]} Km recorridos",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
                                       ),
                                       Text(
-                                        "${myController.duration[index]} de duracion", // Muestra el texto del elemento
+                                        "${myController.duration[index]} de duracion",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,

@@ -16,6 +16,10 @@ class SectionController extends GetxController {
   ].obs;
   var selectedItem = "Buenavista".obs;
 
+  List<String> getActivities() {
+    return sections;
+  }
+
   void setSelectedItem(String value) {
     log("Ejecuto ${value}");
     selectedItem.value = value;
@@ -38,12 +42,12 @@ class SectionController extends GetxController {
         Get.toNamed('/sections');
       } else {
         if (dir == 3) {
-        Get.toNamed('/individualSection', arguments: index);
-      }else{
-        if(dir == 4){
-        Get.toNamed('/sectionCreator', arguments: index);
+          Get.toNamed('/individualSection', arguments: index);
+        } else {
+          if (dir == 4) {
+            Get.toNamed('/sectionCreator', arguments: index);
+          }
         }
-      }
       }
     }
   }
