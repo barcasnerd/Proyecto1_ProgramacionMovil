@@ -1,7 +1,6 @@
-//aquí van cosas que todavia no tengo idea XD
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class RegisterController extends GetxController {
   var firstName = "".obs;
@@ -10,10 +9,12 @@ class RegisterController extends GetxController {
   var password = "".obs;
   var gender = "".obs;
   var birth = "".obs;
-  var weight = 0.0.obs;
-  var height = 0.0.obs;
+  var weight = "".obs;
+  var height = "".obs;
   var visiblePassword = true.obs;
   var invalidCredentials = false.obs;
+  TextEditingController genderEditingController = TextEditingController();
+  TextEditingController dateEditingController = TextEditingController();
 
   void validateCreateAccount(BuildContext context) {
     invalidCredentials.value = !validateEmail(email.value) ||
@@ -26,7 +27,23 @@ class RegisterController extends GetxController {
     }
   }
 
-  void validateCompleteProfile(BuildContext context) {}
+  void validateCompleteProfile(BuildContext context) {
+    if (weight.value.trim() == "") {
+      height.value = "0.0";
+    }
+    if (weight.value.trim() == "") {
+      weight.value = "0.0";
+    }
+    if (double.parse(height.value) <= 0 ||
+        double.parse(weight.value) <= 0 ||
+        gender.value == "" ||
+        birth.value == "") {
+      invalidCredentials.value = true;
+    } else {
+      resetVariables();
+      Navigator.popAndPushNamed(context, '/home');
+    }
+  }
 
   bool validateEmail(String email) {
     // Define a regular expression to validate the email format
@@ -70,50 +87,28 @@ class RegisterController extends GetxController {
     visiblePassword.value = !visiblePassword.value;
   }
 
-  void showGenderModal(context) {
-    double windowHeight = MediaQuery.of(context).size.height;
-    double windowWidth = MediaQuery.of(context).size.width;
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: windowHeight * 0.15,
-          child: Column(
-            children: [
-              ListTile(
-                leading: Icon(
-                  Icons.female,
-                  size: windowHeight * 0.04,
-                ),
-                title: Text(
-                  'Female',
-                  style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                ),
-                onTap: () {
-                  gender.value = "Female";
-                  // Acción a realizar cuando se selecciona la opción 'Música'
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.male,
-                  size: windowHeight * 0.04,
-                ),
-                title: Text(
-                  'Male',
-                  style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                ),
-                onTap: () {
-                  gender.value = "Male";
-                  // Acción a realizar cuando se selecciona la opción 'Vídeo'
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  void changeGenderValue(String newValue) {
+    gender.value = newValue;
+    genderEditingController.text = newValue;
+  }
+
+  void changeDateValue(DateTime newDate) {
+    birth.value = DateFormat('yyyy-MM-dd').format(newDate);
+    dateEditingController.text = DateFormat('yyyy-MM-dd').format(newDate);
+  }
+
+  void resetVariables() {
+    firstName.value = "";
+    lastName.value = "";
+    email.value = "";
+    password.value = "";
+    gender.value = "";
+    birth.value = "";
+    weight.value = "";
+    height.value = "";
+    visiblePassword.value = true;
+    invalidCredentials.value = false;
+    genderEditingController = TextEditingController();
+    dateEditingController = TextEditingController();
   }
 }

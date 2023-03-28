@@ -13,14 +13,12 @@ class LoginController extends GetxController {
   }
 
   void validateEmailAndPassword(BuildContext context) {
-    // TODO: validate email and password format
     invalidCredentials.value =
         !validateEmail(email.value) || !validatePassword(password.value);
     print('📄${invalidCredentials.value}');
-
-    // TODO: remove this lines for actual data
     if (email.value == "admin@admin.com" && password.value == "admin") {
       invalidCredentials.value = false;
+      resetVariables();
       Navigator.popAndPushNamed(context, '/home');
     } else {
       invalidCredentials.value = true;
@@ -48,5 +46,14 @@ class LoginController extends GetxController {
 
     // If the password meets the validation criteria, return true
     return true;
+  }
+
+  void resetVariables() {
+    email.value = "";
+    password.value = "";
+    visiblePassword.value = true;
+    invalidCredentials.value = false;
+    isLogged.value = false;
+    refresh();
   }
 }
