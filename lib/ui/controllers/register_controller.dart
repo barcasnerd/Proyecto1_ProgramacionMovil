@@ -40,6 +40,17 @@ class RegisterController extends GetxController {
         birth.value == "") {
       invalidCredentials.value = true;
     } else {
+      print({
+        firstName,
+        lastName,
+        email,
+        password,
+        gender,
+        birth,
+        weight,
+        height
+      });
+      invalidCredentials.value = true;
       resetVariables();
       Navigator.popAndPushNamed(context, '/home');
     }
