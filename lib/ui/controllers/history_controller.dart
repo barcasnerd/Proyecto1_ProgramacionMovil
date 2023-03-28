@@ -90,4 +90,8 @@ class HistoryController extends GetxController {
   void changePageSections() {
     Get.toNamed('/sections');
   }
+
+  RxList<String> getActivities() {
+    return items;
+  }
 }

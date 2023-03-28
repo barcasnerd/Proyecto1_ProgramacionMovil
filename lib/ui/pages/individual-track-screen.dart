@@ -104,6 +104,9 @@ class IndividualTrackScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: EdgeInsets.all(windowWidth * 0.02),
                                   child: GoogleMap(
+                                    onTap: (argument) {
+                                      print(argument);
+                                    },
                                     markers: Set<Marker>.of([
                                       Marker(
                                         icon: currentLocationIcon,
