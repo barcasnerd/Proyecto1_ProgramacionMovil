@@ -41,6 +41,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  blurry:
+    dependency: "direct main"
+    description:
+      name: blurry
+      sha256: "796733e1bfc37f63a0b71b5c2bee402fcf4784ee7d4407ad21ddeeed540725fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.2"
+  blurrycontainer:
+    dependency: "direct main"
+    description:
+      name: blurrycontainer
+      sha256: "6c76c9ab0c5a918f7946667152d1a282b252976de9bd6a58f157a1dd1eb9aed0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -49,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bootstrap_alert:
+    dependency: "direct main"
+    description:
+      name: bootstrap_alert
+      sha256: a14d6779be53a854739b2b5f1ca44734796847a1346d58f8509be4bb70649c2e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -391,6 +415,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.0"
   io:
     dependency: transitive
     description:
@@ -575,6 +607,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pool:
+    dependency: transitive
+    description:
+      name: pool
+      sha256: "20fe868b6314b322ea036ba325e6fc0711a22948856475e2c2b6306e8ab39c2a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.2"
   pool:
     dependency: transitive
     description:

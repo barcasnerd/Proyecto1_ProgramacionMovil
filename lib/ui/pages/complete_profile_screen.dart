@@ -1,11 +1,17 @@
+import 'package:blurry/blurry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
+import '../controllers/register_controller.dart';
+
 class CompleteProfileScreen extends StatelessWidget {
   const CompleteProfileScreen({super.key});
+
+  static RegisterController registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +64,7 @@ class CompleteProfileScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
+                      controller: registerController.genderEditingController,
                       onTap: () {
                         showModalBottomSheet(
                           context: context,
@@ -77,6 +84,8 @@ class CompleteProfileScreen extends StatelessWidget {
                                           fontSize: windowHeight * 0.02),
                                     ),
                                     onTap: () {
+                                      registerController
+                                          .changeGenderValue('Female');
                                       // Acción a realizar cuando se selecciona la opción 'Música'
                                       Navigator.pop(context);
                                     },
@@ -92,6 +101,8 @@ class CompleteProfileScreen extends StatelessWidget {
                                           fontSize: windowHeight * 0.02),
                                     ),
                                     onTap: () {
+                                      registerController
+                                          .changeGenderValue('Male');
                                       // Acción a realizar cuando se selecciona la opción 'Vídeo'
                                       Navigator.pop(context);
                                     },
@@ -135,12 +146,14 @@ class CompleteProfileScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.9,
                     child: TextFormField(
-                      onTap: () {
-                        showDatePicker(
+                      controller: registerController.dateEditingController,
+                      onTap: () async {
+                        final newDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
-                            firstDate: DateTime(1950),
-                            lastDate: DateTime(2100));
+                            lastDate: DateTime.now(),
+                            firstDate: DateTime(1950));
+                        registerController.changeDateValue(newDate!);
                       },
                       readOnly: true,
                       keyboardType: TextInputType.datetime,
@@ -172,8 +185,16 @@ class CompleteProfileScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.7,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.weight.value = value;
+                      },
                       onTap: () {},
-                      keyboardType: TextInputType.number,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}')),
+                      ],
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -241,8 +262,16 @@ class CompleteProfileScreen extends StatelessWidget {
                       child: SizedBox(
                     width: windowWidth * 0.7,
                     child: TextFormField(
+                      onChanged: (value) {
+                        registerController.height.value = value;
+                      },
                       onTap: () {},
-                      keyboardType: TextInputType.number,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}')),
+                      ],
                       style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -317,8 +346,31 @@ class CompleteProfileScreen extends StatelessWidget {
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: ElevatedButton.icon(
-                        onPressed: () =>
-                            {Navigator.of(context).popAndPushNamed('/home')},
+                        onPressed: () {
+                          registerController.validateCompleteProfile(context);
+                          if (registerController.invalidCredentials.value ==
+                              true) {
+                            Blurry.error(
+                              title: """Invalid fields""",
+                              description:
+                                  'Invalid fields, please check and try again',
+                              confirmButtonText: 'Accept',
+                              onConfirmButtonPressed: () {
+                                Navigator.pop(context);
+                              },
+                              displayCancelButton: false,
+                              titleTextStyle: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: windowHeight * 0.03),
+                              descriptionTextStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: windowHeight * 0.023,
+                              ),
+                              buttonTextStyle:
+                                  GoogleFonts.poppins(color: Colors.white),
+                            ).show(context);
+                          }
+                        },
                         icon: Icon(
                           IconlyLight.arrow_right_2,
                           color: Colors.white,
