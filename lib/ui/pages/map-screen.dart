@@ -2,6 +2,7 @@ import 'package:exercise_tracker/ui/controllers/map-view-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iconly/iconly.dart';
 
 class MapScreen extends StatelessWidget {
   MapScreen({super.key});
@@ -18,7 +19,7 @@ class MapScreen extends StatelessWidget {
         builder: (snap, context) {
           return Scaffold(
               body: mapViewController.currentLocation == null
-                  ? const Center(child: Text("Loading"))
+                  ? const Center(child: CircularProgressIndicator())
                   : Center(
                       child: Column(
                         children: [
@@ -27,11 +28,15 @@ class MapScreen extends StatelessWidget {
                                 EdgeInsetsDirectional.all(windowHeight * 0.01),
                             child: SizedBox(
                               width: windowWidth * 0.98,
-                              height: windowHeight * 0.98,
+                              height: windowHeight * 0.6,
                               child: Center(
                                 child: Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(30),
                                   child: Obx(() => GoogleMap(
+                                        onLongPress: (argument) {
+                                          Navigator.popAndPushNamed(
+                                              snap, '/home');
+                                        },
                                         initialCameraPosition: CameraPosition(
                                             target: LatLng(
                                                 mapViewController
@@ -46,20 +51,13 @@ class MapScreen extends StatelessWidget {
                                                 "currentLocation"),
                                             position: LatLng(
                                                 mapViewController
-                                                    .currentLocation!.latitude!,
+                                                    .showableCurrentLocation!
+                                                    .value
+                                                    .latitude!,
                                                 mapViewController
-                                                    .currentLocation!
+                                                    .showableCurrentLocation!
+                                                    .value
                                                     .longitude!),
-                                          ),
-                                          Marker(
-                                            markerId: MarkerId("source"),
-                                            position: mapViewController
-                                                .sourceLocation,
-                                          ),
-                                          Marker(
-                                            markerId: MarkerId("destination"),
-                                            position:
-                                                mapViewController.destination,
                                           ),
                                         },
                                         onMapCreated: (controller) {
@@ -79,7 +77,11 @@ class MapScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          )
+                          ),
+                          ElevatedButton(
+                              onPressed: () =>
+                                  {Navigator.popAndPushNamed(snap, '/home')},
+                              child: Text('Back')),
                         ],
                       ),
                     ));

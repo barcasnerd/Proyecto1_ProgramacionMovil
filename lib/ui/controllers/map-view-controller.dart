@@ -12,13 +12,24 @@ class MapViewController extends GetxController {
   LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   LatLng destination = LatLng(37.33429383, -122.06600055);
 
-  double cameraZoom = 13.5;
+  double cameraZoom = 19;
 
   Rx<List<LatLng>> polylineCoordinates = Rx<List<LatLng>>([]);
 
   geo.Position? currentLocation;
 
   StreamSubscription<geo.Position>? _locationSubscription;
+
+  Rx<Position> showableCurrentLocation = Position(
+    latitude: 0,
+    longitude: 0,
+    altitude: 10.0,
+    accuracy: 5.0,
+    speed: 0.0,
+    speedAccuracy: 0.0,
+    heading: 0.0,
+    timestamp: DateTime.now(),
+  ).obs;
 
   Future<void> getPolyPoints() async {
     try {
@@ -45,13 +56,14 @@ class MapViewController extends GetxController {
     geo.Position? position = await geo.Geolocator.getCurrentPosition(
       desiredAccuracy: geo.LocationAccuracy.high,
     );
-    if (position != null) {
+    if (currentLocation != null) {
       currentLocation = position;
+      showableCurrentLocation.value = currentLocation!;
       GoogleMapController googleMapController = await controller.future;
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            zoom: 13.5,
+            zoom: cameraZoom,
             target: LatLng(
               position.latitude,
               position.longitude,
@@ -60,26 +72,25 @@ class MapViewController extends GetxController {
         ),
       );
     }
-
     _locationSubscription = geo.Geolocator.getPositionStream(
             locationSettings: geo.LocationSettings(
-                accuracy: geo.LocationAccuracy.high, distanceFilter: 10))
+                accuracy: geo.LocationAccuracy.best, distanceFilter: 10))
         .listen((newLoc) async {
-      if (newLoc != null) {
-        currentLocation = newLoc;
-        GoogleMapController googleMapController = await controller.future;
-        googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              zoom: 13.5,
-              target: LatLng(
-                newLoc.latitude,
-                newLoc.longitude,
-              ),
+      currentLocation = newLoc;
+      showableCurrentLocation.value = currentLocation!;
+      logDebug('🗺️Position change', currentLocation);
+      GoogleMapController googleMapController = await controller.future;
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            zoom: cameraZoom,
+            target: LatLng(
+              newLoc.latitude,
+              newLoc.longitude,
             ),
           ),
-        );
-      }
+        ),
+      );
     });
   }
 
