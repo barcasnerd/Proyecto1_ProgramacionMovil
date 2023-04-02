@@ -19,7 +19,21 @@ class MapScreen extends StatelessWidget {
         builder: (snap, context) {
           return Scaffold(
               body: mapViewController.currentLocation == null
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                          ElevatedButton(
+                              onPressed: () async {
+                                await mapViewController.close();
+                              },
+                              child: Text('close'))
+                        ],
+                      ),
+                    )
                   : Center(
                       child: Column(
                         children: [
@@ -61,8 +75,8 @@ class MapScreen extends StatelessWidget {
                                           ),
                                         },
                                         onMapCreated: (controller) {
-                                          mapViewController.controller
-                                              .complete(controller);
+                                          mapViewController.controller =
+                                              controller;
                                         },
                                         polylines: {
                                           Polyline(
@@ -79,8 +93,10 @@ class MapScreen extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton(
-                              onPressed: () =>
-                                  {Navigator.popAndPushNamed(snap, '/home')},
+                              onPressed: () {
+                                mapViewController.close();
+                                Navigator.popAndPushNamed(snap, '/home');
+                              },
                               child: Text('Back')),
                         ],
                       ),

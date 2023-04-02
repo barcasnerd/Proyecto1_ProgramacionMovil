@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart' as geo;
 import 'package:loggy/loggy.dart';
 
 class MapViewController extends GetxController {
-  final Completer<GoogleMapController> controller = Completer();
+  late GoogleMapController controller;
 
   LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   LatLng destination = LatLng(37.33429383, -122.06600055);
@@ -52,14 +52,20 @@ class MapViewController extends GetxController {
     }
   }
 
-  Future<void> getCurrentLocation() async {
-    geo.Position? position = await geo.Geolocator.getCurrentPosition(
-      desiredAccuracy: geo.LocationAccuracy.high,
-    );
-    if (currentLocation != null) {
+  Future<void> getStartingPosition() async {
+    try {
+      logInfo('[getStartingPosition]: Getting Starting Position');
+      geo.Position? position = await geo.Geolocator.getCurrentPosition(
+        desiredAccuracy: geo.LocationAccuracy.high,
+      );
+      logDebug(position);
+      logDebug(currentLocation);
+      logInfo('[getStartingPosition]: Trying to assing location');
       currentLocation = position;
       showableCurrentLocation.value = currentLocation!;
-      GoogleMapController googleMapController = await controller.future;
+      logInfo('[getStartingPosition]: Waiting for google map controller');
+      GoogleMapController googleMapController = await controller;
+      logInfo('[getStartingPosition]: Trying to animate camera');
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -71,15 +77,29 @@ class MapViewController extends GetxController {
           ),
         ),
       );
+      logInfo('[getStartingPosition]: Camera animated');
+      logDebug(showableCurrentLocation);
+      logInfo('[getStartingPosition]: Position got!');
+    } catch (error) {
+      logError(error);
     }
+  }
+
+  Future<void> getCurrentLocation() async {
+    logInfo('[getCurrentLocation]: Init live location suscription');
     _locationSubscription = geo.Geolocator.getPositionStream(
-            locationSettings: geo.LocationSettings(
+            locationSettings: const geo.LocationSettings(
                 accuracy: geo.LocationAccuracy.best, distanceFilter: 10))
         .listen((newLoc) async {
+      logInfo(
+          '[getCurrentLocation]: Assigning showable location from suscription');
       currentLocation = newLoc;
       showableCurrentLocation.value = currentLocation!;
-      logDebug('🗺️Position change', currentLocation);
-      GoogleMapController googleMapController = await controller.future;
+      logDebug(currentLocation);
+      logDebug(showableCurrentLocation.value);
+      logInfo('[getCurrentLocation]: Waiting for google map controller');
+      GoogleMapController googleMapController = await controller;
+      logInfo('[getCurrentLocation]: Animating map camera');
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -92,6 +112,7 @@ class MapViewController extends GetxController {
         ),
       );
     });
+    logInfo('[getCurrentLocation]: Finished');
   }
 
   Future<void> checkPermission() async {
@@ -110,9 +131,36 @@ class MapViewController extends GetxController {
     }
   }
 
+  Future<void> resetControllerVariables() async {
+    logInfo('[resetControllerVariables]: Init');
+    logInfo('[resetControllerVariables]: Reset current location');
+    currentLocation = null;
+    logInfo('[resetControllerVariables]: Reset google map controller location');
+    logInfo('[resetControllerVariables]: Finished');
+  }
+
+  Future<void> closePositionStream() async {
+    logInfo('[closePositionStream]: Init');
+    await _locationSubscription!.cancel();
+    logDebug(_locationSubscription.isBlank);
+    logDebug(_locationSubscription!.isPaused);
+    logInfo('[closePositionStream]: Finished');
+  }
+
   Future<void> main() async {
+    logInfo('[main]: Init');
     await getPolyPoints();
     await checkPermission();
+    await getStartingPosition();
     await getCurrentLocation();
+    logInfo('[main]: Finished');
+  }
+
+  Future<void> close() async {
+    logInfo('[close]: Init');
+    await resetControllerVariables();
+    await closePositionStream();
+    await Get.delete<MapViewController>();
+    logInfo('[close]: Finished');
   }
 }

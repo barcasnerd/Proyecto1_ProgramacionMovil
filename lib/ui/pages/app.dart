@@ -37,15 +37,15 @@ class App extends StatelessWidget {
         "/individualSection": (context) => const IndividualSection(),
         "/sectionCreator": (context) => const SectionCreator(),
       },
-       onUnknownRoute: (settings) {
-    return MaterialPageRoute(
-      builder: (context) => Scaffold(
-        body: Center(
-          child: Text('Page not found'),
-        ),
-      ),
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Text('Page not found'),
+            ),
+          ),
+        );
+      },
     );
-  },
-);
   }
 }
