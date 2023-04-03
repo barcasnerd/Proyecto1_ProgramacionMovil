@@ -81,6 +81,8 @@ class MapScreen extends StatelessWidget {
                                             Marker(
                                               markerId: const MarkerId(
                                                   "currentLocation"),
+                                              icon: mapViewController
+                                                  .currentLocationIcon.value,
                                               position: LatLng(
                                                   mapViewController
                                                       .showableCurrentLocation!

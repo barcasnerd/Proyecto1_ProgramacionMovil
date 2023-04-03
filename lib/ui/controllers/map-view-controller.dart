@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:loggy/loggy.dart';
+
+import 'home_controller.dart';
 
 class MapViewController extends GetxController {
   late GoogleMapController controller;
@@ -34,6 +37,10 @@ class MapViewController extends GetxController {
 
   Rx<bool> locationServiceEnabled = false.obs;
   Rx<bool> locationPermissionEnabled = false.obs;
+
+  Rx<BitmapDescriptor> currentLocationIcon = BitmapDescriptor.defaultMarker.obs;
+
+  static HomeController homeController = Get.put(HomeController());
 
   Future<void> getPolyPoints() async {
     try {
@@ -153,6 +160,19 @@ class MapViewController extends GetxController {
     logInfo('[checkPermission]: Finished');
   }
 
+  Future<void> setCustomMarkerIcon() async {
+    await BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size.infinite),
+            homeController.activityType.value == 'bike'
+                ? 'assets/images/bike_logo.png'
+                : 'assets/images/run_logo.png')
+        .then(
+      (icon) {
+        currentLocationIcon.value = icon;
+      },
+    );
+  }
+
   Future<void> resetControllerVariables() async {
     logInfo('[resetControllerVariables]: Init');
     logInfo('[resetControllerVariables]: Reset current location');
@@ -175,6 +195,7 @@ class MapViewController extends GetxController {
     logInfo('[main]: Init');
     //await getPolyPoints();
     await checkPermission();
+    await setCustomMarkerIcon();
     await getStartingPosition();
     await getCurrentLocation();
     logInfo('[main]: Finished');

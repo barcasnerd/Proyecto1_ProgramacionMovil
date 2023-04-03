@@ -162,8 +162,10 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: ElevatedButton.icon(
-                      onPressed: () =>
-                          {Navigator.of(context).popAndPushNamed('/map')},
+                      onPressed: () {
+                        controllerRoute.activityType.value = "run";
+                        Navigator.of(context).popAndPushNamed('/map');
+                      },
                       icon: Icon(null),
                       label: Row(
                         children: [
@@ -253,8 +255,10 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: ElevatedButton.icon(
-                      onPressed: () =>
-                          {Navigator.of(context).popAndPushNamed('/map')},
+                      onPressed: () {
+                        controllerRoute.activityType.value = "bike";
+                        Navigator.of(context).popAndPushNamed('/map');
+                      },
                       icon: Icon(null),
                       label: Row(
                         children: [
