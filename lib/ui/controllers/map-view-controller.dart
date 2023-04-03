@@ -1,11 +1,18 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:loggy/loggy.dart';
+import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
+import 'package:flutter/painting.dart' as painting;
 
 import 'home_controller.dart';
 
@@ -173,6 +180,78 @@ class MapViewController extends GetxController {
     );
   }
 
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    final data = await rootBundle.load(path);
+    final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    final frame = await codec.getNextFrame();
+    final byteData =
+        await frame.image.toByteData(format: ui.ImageByteFormat.png);
+    return byteData!.buffer.asUint8List();
+  }
+
+  Future<Uint8List> getBytesFromAssetRadius(String path, int width) async {
+    final data = await rootBundle.load(path);
+    final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    final frame = await codec.getNextFrame();
+    final byteData =
+        await frame.image.toByteData(format: ui.ImageByteFormat.png);
+
+    // Create a new PictureRecorder
+    final recorder = ui.PictureRecorder();
+
+    // Create a Canvas with the recorder
+    final canvas = ui.Canvas(recorder);
+
+    // Get the width and height of the image
+    final imageWidth = frame.image.width.toDouble();
+    final imageHeight = frame.image.height.toDouble();
+
+    // Calculate the radius of the circle based on the larger dimension of the image
+    final circleRadius =
+        (imageWidth > imageHeight ? imageWidth : imageHeight) / 2;
+
+    // Draw a white circle with the calculated radius
+    canvas.drawCircle(ui.Offset(circleRadius, circleRadius), circleRadius,
+        ui.Paint()..color = const Color(0xff09fba5));
+
+    // Draw the image in the center of the circle
+    canvas.drawImage(
+        frame.image,
+        ui.Offset(
+            circleRadius - (imageWidth / 2), circleRadius - (imageHeight / 2)),
+        ui.Paint());
+
+    // End the recording and create a Picture object
+    final picture = recorder.endRecording();
+
+    // Convert the Picture to a PNG-encoded ByteData
+    var pngBytes1 = await picture.toImage(
+        circleRadius.toInt() * 2, circleRadius.toInt() * 2);
+    final pngBytes = await pngBytes1.toByteData(format: ui.ImageByteFormat.png);
+
+    return pngBytes!.buffer.asUint8List();
+  }
+
+  Future<void> setCustomMarkerIcon2() async {
+    final Uint8List markerIcon = await getBytesFromAssetRadius(
+        homeController.activityType.value == 'bike'
+            ? 'assets/images/bike_logo.png'
+            : 'assets/images/run_logo.png',
+        200);
+    currentLocationIcon.value = BitmapDescriptor.fromBytes(markerIcon);
+  }
+
+  Future<void> setCustomMarkerIcon3() async {
+    final Uint8List markerIcon = await getBytesFromAsset(
+        homeController.activityType.value == 'bike'
+            ? 'assets/images/bike_logo.png'
+            : 'assets/images/run_logo.png',
+        100);
+    currentLocationIcon.value = BitmapDescriptor.fromBytes(markerIcon);
+  }
+
   Future<void> resetControllerVariables() async {
     logInfo('[resetControllerVariables]: Init');
     logInfo('[resetControllerVariables]: Reset current location');
@@ -196,6 +275,7 @@ class MapViewController extends GetxController {
     //await getPolyPoints();
     await checkPermission();
     await setCustomMarkerIcon();
+    await setCustomMarkerIcon2();
     await getStartingPosition();
     await getCurrentLocation();
     logInfo('[main]: Finished');
