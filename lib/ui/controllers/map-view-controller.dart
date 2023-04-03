@@ -140,6 +140,8 @@ class MapViewController extends GetxController {
       } else {
         locationPermissionEnabled.value = true;
       }
+    } else {
+      locationPermissionEnabled.value = true;
     }
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
