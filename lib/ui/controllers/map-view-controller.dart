@@ -49,6 +49,8 @@ class MapViewController extends GetxController {
 
   static HomeController homeController = Get.put(HomeController());
 
+  Rx<bool> isRecording = false.obs;
+
   Future<void> getPolyPoints() async {
     try {
       PolylinePoints polylinePoints = PolylinePoints();

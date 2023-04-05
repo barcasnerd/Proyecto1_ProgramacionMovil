@@ -8,12 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconly/iconly.dart';
 
+import '../controllers/home_controller.dart';
 import '../controllers/map-view-controller.dart';
 
 class RouteScreen extends StatelessWidget {
   RouteScreen({super.key});
 
   static MapViewController mapViewController = Get.put(MapViewController());
+  static HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +212,9 @@ class RouteScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Running Route',
+                                    homeController.activityType == "run"
+                                        ? 'Running Route'
+                                        : 'Biking Route',
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.bold,
@@ -354,29 +358,37 @@ class RouteScreen extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Blurry.success(
-                                        //icon: null,
-                                        //themeColor: Color.fromRGBO(6, 252, 163, 1),
-                                        title: """Session Finished""",
-                                        description:
-                                            'Your route has been saved. You can check your past routes in the history tab',
-                                        confirmButtonText: 'Accept',
-                                        onConfirmButtonPressed: () {
-                                          Navigator.popAndPushNamed(
-                                              context, '/home');
-                                        },
-                                        displayCancelButton: false,
-                                        titleTextStyle: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: windowHeight * 0.03),
-                                        descriptionTextStyle:
-                                            GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: windowHeight * 0.023,
-                                        ),
-                                        buttonTextStyle: GoogleFonts.poppins(
-                                            color: Colors.white),
-                                      ).show(context);
+                                      if (mapViewController.isRecording.value ==
+                                          true) {
+                                        mapViewController.isRecording.value =
+                                            false;
+                                        Blurry.success(
+                                          //icon: null,
+                                          //themeColor: Color.fromRGBO(6, 252, 163, 1),
+                                          title: """Session Finished""",
+                                          description:
+                                              'Your route has been saved. You can check your past routes in the history tab',
+                                          confirmButtonText: 'Accept',
+                                          onConfirmButtonPressed: () {
+                                            Navigator.popAndPushNamed(
+                                                context, '/home');
+                                          },
+                                          displayCancelButton: false,
+                                          titleTextStyle: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: windowHeight * 0.03),
+                                          descriptionTextStyle:
+                                              GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: windowHeight * 0.023,
+                                          ),
+                                          buttonTextStyle: GoogleFonts.poppins(
+                                              color: Colors.white),
+                                        ).show(context);
+                                      } else {
+                                        mapViewController.isRecording.value =
+                                            true;
+                                      }
                                     },
                                     child: Container(
                                       width: windowWidth * 0.2,
@@ -394,11 +406,15 @@ class RouteScreen extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(100),
                                       ),
-                                      child: Icon(
-                                        IconlyLight.play,
-                                        size: windowWidth * 0.2,
-                                        color: Colors.white,
-                                      ),
+                                      child: Obx(() => Icon(
+                                            mapViewController
+                                                        .isRecording.value ==
+                                                    true
+                                                ? Icons.stop_circle_outlined
+                                                : IconlyLight.play,
+                                            size: windowWidth * 0.2,
+                                            color: Colors.white,
+                                          )),
                                     ),
                                   )
                                 ],
