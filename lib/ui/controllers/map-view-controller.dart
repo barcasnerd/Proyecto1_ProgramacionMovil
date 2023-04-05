@@ -58,6 +58,12 @@ class MapViewController extends GetxController {
   var minutes = 0.obs;
   var hours = 0.obs;
 
+  geo.Position? pasterLocation;
+  geo.Position? futureLocation;
+
+  double currentDistance = 0.0;
+  Rx<String> showableDistance = (0.0).toStringAsFixed(2).obs;
+
   Future<void> getPolyPoints() async {
     try {
       PolylinePoints polylinePoints = PolylinePoints();
@@ -89,6 +95,10 @@ class MapViewController extends GetxController {
       logDebug(currentLocation);
       logInfo('[getStartingPosition]: Trying to assing location');
       currentLocation = position;
+      logInfo('[getStartingPosition]: asing paster location');
+      pasterLocation = position;
+      logInfo('[getStartingPosition]: asing future location');
+      futureLocation = position;
       showableCurrentLocation.value = currentLocation!;
       logInfo('[getStartingPosition]: Init polilynepoints');
       sourceLocation = LatLng(showableCurrentLocation.value.latitude,
@@ -129,6 +139,20 @@ class MapViewController extends GetxController {
       showableCurrentLocation.value = currentLocation!;
       logDebug(currentLocation);
       logDebug(showableCurrentLocation.value);
+      logInfo('[getStartingPosition]: asing paster location');
+      pasterLocation = futureLocation;
+      logInfo('[getStartingPosition]: asing future location');
+      futureLocation = newLoc;
+      logInfo('[getStartingPosition]: calculate distance');
+      var distance = distanceInKm(
+          pasterLocation!.latitude,
+          pasterLocation!.longitude,
+          futureLocation!.latitude,
+          futureLocation!.longitude);
+      logDebug(distance);
+      currentDistance = currentDistance + distance;
+      logInfo('[getStartingPosition]: showable distance in km');
+      showableDistance.value = currentDistance.toStringAsFixed(2);
       logInfo('[getCurrentLocation]: Waiting for google map controller');
       GoogleMapController googleMapController = await controller;
       logInfo('[getCurrentLocation]: Animating map camera');
@@ -238,6 +262,8 @@ class MapViewController extends GetxController {
     seconds = 0.obs;
     minutes = 0.obs;
     hours = 0.obs;
+    currentDistance = 0;
+    showableDistance = (0.0).toStringAsFixed(2).obs;
     logInfo('[resetControllerVariables]: reset stopwatch');
     await stopwatch.reset();
     logInfo('[resetControllerVariables]: stop stopwatch');

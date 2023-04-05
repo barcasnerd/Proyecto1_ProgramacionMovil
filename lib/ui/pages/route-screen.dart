@@ -333,13 +333,13 @@ class RouteScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        '0 KM',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: windowWidth * 0.06),
-                                      )
+                                      Obx(() => Text(
+                                            '${mapViewController.showableDistance} KM',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: windowWidth * 0.06),
+                                          ))
                                     ],
                                   ),
                                   Row(
