@@ -42,8 +42,8 @@ class MapViewController extends GetxController {
     timestamp: DateTime.now(),
   ).obs;
 
-  Rx<bool> locationServiceEnabled = false.obs;
-  Rx<bool> locationPermissionEnabled = false.obs;
+  Rx<bool> locationServiceEnabled = true.obs;
+  Rx<bool> locationPermissionEnabled = true.obs;
 
   Rx<BitmapDescriptor> currentLocationIcon = BitmapDescriptor.defaultMarker.obs;
 
@@ -167,29 +167,6 @@ class MapViewController extends GetxController {
     logInfo('[checkPermission]: Finished');
   }
 
-  Future<void> setCustomMarkerIcon() async {
-    await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size.infinite),
-            homeController.activityType.value == 'bike'
-                ? 'assets/images/bike_logo.png'
-                : 'assets/images/run_logo.png')
-        .then(
-      (icon) {
-        currentLocationIcon.value = icon;
-      },
-    );
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    final data = await rootBundle.load(path);
-    final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    final frame = await codec.getNextFrame();
-    final byteData =
-        await frame.image.toByteData(format: ui.ImageByteFormat.png);
-    return byteData!.buffer.asUint8List();
-  }
-
   Future<Uint8List> getBytesFromAssetRadius(String path, int width) async {
     final data = await rootBundle.load(path);
     final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
@@ -234,21 +211,12 @@ class MapViewController extends GetxController {
     return pngBytes!.buffer.asUint8List();
   }
 
-  Future<void> setCustomMarkerIcon2() async {
+  Future<void> setCustomMarkerIcon() async {
     final Uint8List markerIcon = await getBytesFromAssetRadius(
         homeController.activityType.value == 'bike'
             ? 'assets/images/bike_logo.png'
             : 'assets/images/run_logo.png',
-        200);
-    currentLocationIcon.value = BitmapDescriptor.fromBytes(markerIcon);
-  }
-
-  Future<void> setCustomMarkerIcon3() async {
-    final Uint8List markerIcon = await getBytesFromAsset(
-        homeController.activityType.value == 'bike'
-            ? 'assets/images/bike_logo.png'
-            : 'assets/images/run_logo.png',
-        100);
+        150);
     currentLocationIcon.value = BitmapDescriptor.fromBytes(markerIcon);
   }
 
@@ -275,7 +243,6 @@ class MapViewController extends GetxController {
     //await getPolyPoints();
     await checkPermission();
     await setCustomMarkerIcon();
-    await setCustomMarkerIcon2();
     await getStartingPosition();
     await getCurrentLocation();
     logInfo('[main]: Finished');
