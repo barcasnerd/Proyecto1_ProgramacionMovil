@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,12 @@ class MapViewController extends GetxController {
   static HomeController homeController = Get.put(HomeController());
 
   Rx<bool> isRecording = false.obs;
+
+  var stopwatch;
+  Rx<Duration> elapsedTime = Rx<Duration>(Duration.zero);
+  var seconds = 0.obs;
+  var minutes = 0.obs;
+  var hours = 0.obs;
 
   Future<void> getPolyPoints() async {
     try {
@@ -227,6 +234,14 @@ class MapViewController extends GetxController {
     logInfo('[resetControllerVariables]: Reset current location');
     currentLocation = null;
     polylineCoordinates.value.clear();
+    logInfo('[resetControllerVariables]: reset showable variables');
+    seconds = 0.obs;
+    minutes = 0.obs;
+    hours = 0.obs;
+    logInfo('[resetControllerVariables]: reset stopwatch');
+    await stopwatch.reset();
+    logInfo('[resetControllerVariables]: stop stopwatch');
+    await stopwatch.stop();
     logInfo('[resetControllerVariables]: Reset google map controller');
     logInfo('[resetControllerVariables]: Finished');
   }
@@ -242,12 +257,44 @@ class MapViewController extends GetxController {
 
   Future<void> initStopWatch() async {
     logInfo('[initStopWatch]: Init');
+    elapsedTime = Rx<Duration>(Duration.zero);
+    stopwatch = Stopwatch();
+    stopwatch.start();
+    Timer.periodic(Duration(milliseconds: 100), (_) {
+      if (stopwatch.isRunning) {
+        elapsedTime.value = stopwatch.elapsed;
+        int current = elapsedTime.value.inSeconds;
+        seconds.value = (current as int) % 60;
+        minutes.value = (current / 60).toInt() % 60;
+        hours.value = (current / 3600).toInt();
+      }
+    });
     logInfo('[initStopWatch]: Finished');
   }
 
   Future<void> stopStopWatch() async {
     logInfo('[stopStopWatch]: Init');
+    seconds = 0.obs;
+    minutes = 0.obs;
+    hours = 0.obs;
+    await stopwatch.reset();
+    await stopwatch.stop();
     logInfo('[stopStopWatch]: Finished');
+  }
+
+  double distanceInKm(lat1, long1, lat2, long2) {
+    var R = 6371; // Radio de la Tierra en km
+    var dLat = _degToRad(lat2 - lat1);
+    var dLon = _degToRad(long2 - long1);
+    var a = pow(sin(dLat / 2), 2) +
+        cos(_degToRad(lat1)) * cos(_degToRad(lat2)) * pow(sin(dLon / 2), 2);
+    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    var d = R * c;
+    return d;
+  }
+
+  double _degToRad(degrees) {
+    return degrees * pi / 180;
   }
 
   Future<void> main() async {

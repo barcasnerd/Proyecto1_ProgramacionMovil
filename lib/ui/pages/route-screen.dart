@@ -307,13 +307,13 @@ class RouteScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        '00:00:00',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: windowWidth * 0.06),
-                                      )
+                                      Obx(() => Text(
+                                            '${mapViewController.hours.value.toString().padLeft(2, '0')}:${mapViewController.minutes.value.toString().padLeft(2, '0')}:${mapViewController.seconds.value.toString().padLeft(2, '0')}',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: windowWidth * 0.06),
+                                          ))
                                     ],
                                   ),
                                   Row(
@@ -361,6 +361,7 @@ class RouteScreen extends StatelessWidget {
                                     onTap: () async {
                                       if (mapViewController.isRecording.value ==
                                           true) {
+                                        await mapViewController.stopStopWatch();
                                         mapViewController.isRecording.value =
                                             false;
                                         Blurry.success(
@@ -390,9 +391,9 @@ class RouteScreen extends StatelessWidget {
                                               color: Colors.white),
                                         ).show(context);
                                       } else {
+                                        await mapViewController.initStopWatch();
                                         mapViewController.isRecording.value =
                                             true;
-                                        await mapViewController.initStopWatch();
                                       }
                                     },
                                     child: Container(
