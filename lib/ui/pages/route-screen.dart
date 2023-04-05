@@ -361,9 +361,6 @@ class RouteScreen extends StatelessWidget {
                                     onTap: () async {
                                       if (mapViewController.isRecording.value ==
                                           true) {
-                                        await mapViewController.stopStopWatch();
-                                        mapViewController.isRecording.value =
-                                            false;
                                         Blurry.success(
                                           //icon: null,
                                           //themeColor: Color.fromRGBO(6, 252, 163, 1),
@@ -372,8 +369,10 @@ class RouteScreen extends StatelessWidget {
                                               'Your route has been saved. You can check your past routes in the history tab',
                                           confirmButtonText: 'Accept',
                                           onConfirmButtonPressed: () async {
+                                            mapViewController
+                                                .isRecording.value = false;
                                             await mapViewController
-                                                .initStopWatch();
+                                                .stopStopWatch();
                                             await mapViewController.close();
                                             Navigator.popAndPushNamed(
                                                 context, '/home');

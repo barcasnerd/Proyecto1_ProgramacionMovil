@@ -21,7 +21,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Exercise Tracker',
-      initialRoute: "/home",
+      initialRoute: "/login",
       routes: {
         // "/": (context) => const DraftScreen(),
         "/login": (context) => const LoginScreen(),
