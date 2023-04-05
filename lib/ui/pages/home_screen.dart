@@ -164,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         controllerRoute.activityType.value = "run";
-                        Navigator.of(context).popAndPushNamed('/map');
+                        Navigator.of(context).popAndPushNamed('/route');
                       },
                       icon: Icon(null),
                       label: Row(
@@ -257,7 +257,7 @@ class HomeScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         controllerRoute.activityType.value = "bike";
-                        Navigator.of(context).popAndPushNamed('/map');
+                        Navigator.of(context).popAndPushNamed('/route');
                       },
                       icon: Icon(null),
                       label: Row(
