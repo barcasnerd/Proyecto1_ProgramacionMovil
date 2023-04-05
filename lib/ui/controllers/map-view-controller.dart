@@ -329,7 +329,7 @@ class MapViewController extends GetxController {
     await checkPermission();
     await setCustomMarkerIcon();
     await getStartingPosition();
-    await getCurrentLocation();
+    //await getCurrentLocation();
     logInfo('[main]: Finished');
   }
 
