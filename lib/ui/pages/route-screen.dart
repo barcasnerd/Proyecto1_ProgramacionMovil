@@ -390,8 +390,6 @@ class RouteScreen extends StatelessWidget {
                                               color: Colors.white),
                                         ).show(context);
                                       } else {
-                                        await mapViewController
-                                            .getCurrentLocation();
                                         await mapViewController.initStopWatch();
                                         mapViewController.isRecording.value =
                                             true;

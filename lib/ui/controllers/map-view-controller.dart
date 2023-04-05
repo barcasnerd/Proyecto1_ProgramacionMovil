@@ -150,7 +150,9 @@ class MapViewController extends GetxController {
           futureLocation!.latitude,
           futureLocation!.longitude);
       logDebug(distance);
-      currentDistance = currentDistance + distance;
+      this.isRecording == true
+          ? currentDistance = currentDistance + distance
+          : null;
       logInfo('[getStartingPosition]: showable distance in km');
       showableDistance.value = currentDistance.toStringAsFixed(2);
       logInfo('[getCurrentLocation]: Waiting for google map controller');
@@ -168,9 +170,11 @@ class MapViewController extends GetxController {
         ),
       );
       logInfo('[getStartingPosition]: Update polilynepoints');
-      polylineCoordinates.value.add(LatLng(
-          showableCurrentLocation.value.latitude,
-          showableCurrentLocation.value.longitude));
+      this.isRecording == true
+          ? polylineCoordinates.value.add(LatLng(
+              showableCurrentLocation.value.latitude,
+              showableCurrentLocation.value.longitude))
+          : null;
     });
     logInfo('[getCurrentLocation]: Finished');
   }
@@ -329,7 +333,7 @@ class MapViewController extends GetxController {
     await checkPermission();
     await setCustomMarkerIcon();
     await getStartingPosition();
-    //await getCurrentLocation();
+    await getCurrentLocation();
     logInfo('[main]: Finished');
   }
 
