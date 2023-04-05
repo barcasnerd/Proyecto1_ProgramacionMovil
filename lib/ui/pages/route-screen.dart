@@ -178,7 +178,8 @@ class RouteScreen extends StatelessWidget {
                                         title: """Session finished""",
                                         description: "You route won't be saved",
                                         confirmButtonText: 'Confirm',
-                                        onConfirmButtonPressed: () {
+                                        onConfirmButtonPressed: () async {
+                                          await mapViewController.close();
                                           Navigator.popAndPushNamed(
                                               context, '/home');
                                         },
@@ -357,7 +358,7 @@ class RouteScreen extends StatelessWidget {
                               Column(
                                 children: [
                                   InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (mapViewController.isRecording.value ==
                                           true) {
                                         mapViewController.isRecording.value =
@@ -369,7 +370,10 @@ class RouteScreen extends StatelessWidget {
                                           description:
                                               'Your route has been saved. You can check your past routes in the history tab',
                                           confirmButtonText: 'Accept',
-                                          onConfirmButtonPressed: () {
+                                          onConfirmButtonPressed: () async {
+                                            await mapViewController
+                                                .initStopWatch();
+                                            await mapViewController.close();
                                             Navigator.popAndPushNamed(
                                                 context, '/home');
                                           },
@@ -388,6 +392,7 @@ class RouteScreen extends StatelessWidget {
                                       } else {
                                         mapViewController.isRecording.value =
                                             true;
+                                        await mapViewController.initStopWatch();
                                       }
                                     },
                                     child: Container(

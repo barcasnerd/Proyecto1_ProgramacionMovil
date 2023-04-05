@@ -240,6 +240,16 @@ class MapViewController extends GetxController {
     logInfo('[closePositionStream]: Finished');
   }
 
+  Future<void> initStopWatch() async {
+    logInfo('[initStopWatch]: Init');
+    logInfo('[initStopWatch]: Finished');
+  }
+
+  Future<void> stopStopWatch() async {
+    logInfo('[stopStopWatch]: Init');
+    logInfo('[stopStopWatch]: Finished');
+  }
+
   Future<void> main() async {
     logInfo('[main]: Init');
     //await getPolyPoints();
