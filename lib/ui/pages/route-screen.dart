@@ -14,11 +14,11 @@ import '../controllers/map-view-controller.dart';
 class RouteScreen extends StatelessWidget {
   RouteScreen({super.key});
 
-  static MapViewController mapViewController = Get.put(MapViewController());
   static HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
+    MapViewController mapViewController = Get.put(MapViewController());
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
 
@@ -180,6 +180,7 @@ class RouteScreen extends StatelessWidget {
                                         confirmButtonText: 'Confirm',
                                         onConfirmButtonPressed: () async {
                                           await mapViewController.close();
+                                          await Get.delete<MapViewController>();
                                           Navigator.popAndPushNamed(
                                               context, '/home');
                                         },
@@ -374,6 +375,8 @@ class RouteScreen extends StatelessWidget {
                                             await mapViewController
                                                 .stopStopWatch();
                                             await mapViewController.close();
+                                            await Get.delete<
+                                                MapViewController>();
                                             Navigator.popAndPushNamed(
                                                 context, '/home');
                                           },

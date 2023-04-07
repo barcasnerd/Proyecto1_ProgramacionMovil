@@ -103,8 +103,12 @@ class MapViewController extends GetxController {
       logInfo('[getStartingPosition]: Init polilynepoints');
       sourceLocation = LatLng(showableCurrentLocation.value.latitude,
           showableCurrentLocation.value.longitude);
-      polylineCoordinates.value.add(sourceLocation);
-      polylineCoordinatesWrapper.add(sourceLocation);
+      isRecording == true
+          ? polylineCoordinates.value.add(sourceLocation)
+          : null;
+      isRecording == true
+          ? polylineCoordinatesWrapper.add(sourceLocation)
+          : null;
       logInfo('[getStartingPosition]: Waiting for google map controller');
       GoogleMapController googleMapController = await controller;
       logInfo('[getStartingPosition]: Trying to animate camera');
@@ -268,10 +272,12 @@ class MapViewController extends GetxController {
     hours = 0.obs;
     currentDistance = 0;
     showableDistance = (0.0).toStringAsFixed(2).obs;
-    logInfo('[resetControllerVariables]: reset stopwatch');
-    await stopwatch.reset();
-    logInfo('[resetControllerVariables]: stop stopwatch');
-    await stopwatch.stop();
+    if (stopwatch != null && stopwatch.isRunning == true) {
+      logInfo('[resetControllerVariables]: reset stopwatch');
+      await stopwatch.reset();
+      logInfo('[resetControllerVariables]: stop stopwatch');
+      await stopwatch.stop();
+    }
     logInfo('[resetControllerVariables]: Reset google map controller');
     logInfo('[resetControllerVariables]: Finished');
   }

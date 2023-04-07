@@ -12,6 +12,6 @@ void main() {
   Get.lazyPut<HistoryController>(() => HistoryController());
   Get.lazyPut<LoginController>(() => LoginController());
   Get.lazyPut<RegisterController>(() => RegisterController());
-  Get.lazyPut<MapViewController>(() => MapViewController());
+  //Get.lazyPut<MapViewController>(() => MapViewController());
   runApp(App());
 }
