@@ -29,9 +29,9 @@ class SectionCreator extends StatelessWidget {
     double windowWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body:  Center(
-        child: ListView(
-          children: [ FutureBuilder(
+      body: Center(
+        child: ListView(children: [
+          FutureBuilder(
             future: _determinePosition(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -82,9 +82,10 @@ class SectionCreator extends StatelessWidget {
                                           fontSize: 32),
                                     ),
                                     Text(
-                                      'Select two points on the map to \ncreate a new section',
+                                      'Select four points on the map to \ncreate a new section',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.poppins(color: Colors.grey,
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.grey,
                                           fontSize: 16,
                                           fontWeight: FontWeight.w300),
                                     )
@@ -103,35 +104,42 @@ class SectionCreator extends StatelessWidget {
                                   height: windowHeight * 0.5,
                                   child: Center(
                                     child: Padding(
-                                      padding: EdgeInsets.all(windowWidth * 0.02),
-                                      child: GoogleMap(
-                                        markers: Set<Marker>.of([
-                                          Marker(
-                                            icon: currentLocationIcon,
-                                            markerId: MarkerId('initial_marker'),
-                                            position: LatLng(
-                                                snapshot.data?.latitude ??
-                                                    10.963889,
-                                                snapshot.data?.longitude ??
-                                                    -74.796387),
-                                          )
-                                        ]),
-                                        minMaxZoomPreference:
-                                            MinMaxZoomPreference(15, 18),
-                                        mapType: MapType.normal,
-                                        onMapCreated: (controller) {
-                                          controller.setMapStyle(
-                                              ' [{"featureType":"poi","stylers":[{"visibility":"off"}]}]');
-                                        },
-                                        zoomControlsEnabled: false,
-                                        initialCameraPosition: CameraPosition(
-                                            target: LatLng(
-                                                snapshot.data?.latitude ??
-                                                    10.963889,
-                                                snapshot.data?.longitude ??
-                                                    -74.796387),
-                                            zoom: 15.0),
-                                      ),
+                                      padding:
+                                          EdgeInsets.all(windowWidth * 0.02),
+                                      child: Obx(() => GoogleMap(
+                                            minMaxZoomPreference:
+                                                MinMaxZoomPreference(15, 18),
+                                            mapType: MapType.normal,
+                                            onMapCreated: (controller) {
+                                              controller.setMapStyle(
+                                                  ' [{"featureType":"poi","stylers":[{"visibility":"off"}]}]');
+                                            },
+                                            zoomControlsEnabled: false,
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                                    target: LatLng(
+                                                        snapshot.data
+                                                                ?.latitude ??
+                                                            10.963889,
+                                                        snapshot.data
+                                                                ?.longitude ??
+                                                            -74.796387),
+                                                    zoom: 15.0),
+                                            // Agregar onTap y una función que maneje el evento
+                                            onTap: (LatLng latLng) {
+                                              mySection.addCoordinate(latLng);
+                                              print(mySection.coordinatesList);
+                                            },
+                                            polylines: {
+                                              Polyline(
+                                                polylineId: PolylineId("route"),
+                                                points: mySection
+                                                    .coordinatesList.value,
+                                                color: Color(0xff09fba5),
+                                                width: 10,
+                                              ),
+                                            },
+                                          )),
                                     ),
                                   ),
                                 ),
@@ -141,167 +149,79 @@ class SectionCreator extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight*0.01),
-                              child:
-                              Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Flexible(
-                            child: SizedBox(
-                                                  width: windowWidth * 0.9,
-                                                  
-                                                  child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                filled: true,
-                                border: InputBorder.none,
-                                hintText: 'Section name',
-                                prefixIcon: Icon(IconlyLight.paper)),
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
-                            ),
-                          ),
-                          
-                          Padding(
-                            padding: EdgeInsets.all(windowHeight * 0.001),
-                            child: Text("Starting location", textAlign: TextAlign.left,
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12)),
-                          ),
-                          
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight*0.01),
-                              child:
-                              Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Flexible(
-                            child: SizedBox(
-                                                  width: windowWidth * 0.9,
-                                                  
-                                                  child: TextFormField(
-                         
-                            style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                filled: true,
-                                border: InputBorder.none,
-                                hintText: '10.994023, -74.819782',
-                                prefixIcon: Icon(IconlyLight.discovery)),
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(windowHeight * 0.001),
-                            child: Text("Finishing location", textAlign: TextAlign.left,
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12)),
-                          ),
-                          
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight*0.01),
-                              child:
-                              Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Flexible(
-                            child: SizedBox(
-                                                  width: windowWidth * 0.9,
-                                                  
-                                                  child: TextFormField(
-                            
-                            style: GoogleFonts.poppins(fontSize: windowHeight * 0.02),
-                            decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0))),
-                                filled: true,
-                                border: InputBorder.none,
-                                hintText: '10.994023, -74.819782',
-                                prefixIcon: Icon(IconlyLight.discovery)),
-                                                  ),
-                                                )),
-                                              
-                                             
-                                
-                                              ],
-                                              
-                                            ),
-                                            
+                                left: windowWidth * 0.08,
+                                right: windowWidth * 0.08,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                      child: SizedBox(
+                                    width: windowWidth * 0.9,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
+                                      onChanged: (value) =>
+                                          mySection.nameSection.value = value,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: windowHeight * 0.02),
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
+                                          filled: true,
+                                          border: InputBorder.none,
+                                          hintText: 'Section name',
+                                          prefixIcon: Icon(IconlyLight.paper)),
+                                    ),
+                                  )),
+                                ],
+                              ),
                             ),
                           ),
                           Spacer(),
                           Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromRGBO(157, 206, 255, 1),
-                              Color.fromRGBO(6, 252, 163, 1)
-                            ],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () =>
-                              //darle funcionalidad cuando tengamos los controladores
-                              {Navigator.of(context).popAndPushNamed('/history')},
-                          child: Text(
-                            'Create section',
-                            style: GoogleFonts.poppins(
-                                fontSize: windowHeight * 0.02,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            minimumSize:
-                                Size(windowWidth * 0.5, windowHeight * 0.06), backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromRGBO(157, 206, 255, 1),
+                                  Color.fromRGBO(6, 252, 163, 1)
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
                               borderRadius: BorderRadius.circular(100),
                             ),
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  //darle funcionalidad cuando tengamos los controladores
+                                  {
+                                //Navigator.of(context).popAndPushNamed('/history')
+                                mySection.saveSegment(mySection.coordinatesList,
+                                    mySection.nameSection)
+                              },
+                              child: Text(
+                                'Create section',
+                                style: GoogleFonts.poppins(
+                                    fontSize: windowHeight * 0.02,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    windowWidth * 0.5, windowHeight * 0.06),
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
                         ],
                       ),
                     ));
@@ -317,8 +237,6 @@ class SectionCreator extends StatelessWidget {
       bottomNavigationBar: CustomNavBar(controller: controllerNav),
     );
   }
-
-  
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;

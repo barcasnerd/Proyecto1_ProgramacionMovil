@@ -15,6 +15,7 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    myController.initHistory();
     String _selectedValue;
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
@@ -22,6 +23,9 @@ class HistoryScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
+          Container(
+            height: windowHeight * 0.05,
+          ),
           Text('History',
               style: GoogleFonts.poppins(
                   textStyle: TextStyle(
@@ -73,9 +77,10 @@ class HistoryScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
               child: GestureDetector(
                 onTap: () {
+                  mySection.initSections();
                   mySection.changePage(0, 2);
                 },
-                child: Text('View all activities',
+                child: Text('View all segments',
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(fontSize: windowHeight * 0.018))),
               ),
@@ -89,6 +94,7 @@ class HistoryScreen extends StatelessWidget {
                   return Center(
                     child: GestureDetector(
                       onTap: () {
+                        mySection.initSections();
                         myController.changePage(index, 1);
                         print('El container fue presionado');
                       },
