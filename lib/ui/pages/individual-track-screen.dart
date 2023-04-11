@@ -110,17 +110,6 @@ class IndividualTrackScreen extends StatelessWidget {
                                     onTap: (argument) {
                                       print(argument);
                                     },
-                                    markers: Set<Marker>.of([
-                                      Marker(
-                                        icon: currentLocationIcon,
-                                        markerId: MarkerId('initial_marker'),
-                                        position: LatLng(
-                                            snapshot.data?.latitude ??
-                                                10.963889,
-                                            snapshot.data?.longitude ??
-                                                -74.796387),
-                                      )
-                                    ]),
                                     minMaxZoomPreference:
                                         MinMaxZoomPreference(15, 18),
                                     mapType: MapType.normal,
@@ -136,6 +125,14 @@ class IndividualTrackScreen extends StatelessWidget {
                                             snapshot.data?.longitude ??
                                                 -74.796387),
                                         zoom: 15.0),
+                                    polylines: {
+                                      Polyline(
+                                        polylineId: PolylineId("route"),
+                                        points: myController.historial[index],
+                                        color: Colors.red,
+                                        width: 10,
+                                      ),
+                                    },
                                   ),
                                 ),
                               ),

@@ -8,7 +8,7 @@ class SectionController extends GetxController {
   Rx<List<LatLng>> coordinatesList = Rx<List<LatLng>>([]);
   List<LatLng> segment1 = [];
   void addCoordinate(LatLng coordinate) {
-    if (coordinatesList.value.length >= 4) {
+    if (coordinatesList.value.length >= 5) {
       coordinatesList.update((list) {
         list!.removeAt(0);
         list.add(coordinate);
