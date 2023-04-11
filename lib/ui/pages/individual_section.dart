@@ -21,6 +21,9 @@ class IndividualSection extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: Column(children: [
+          Container(
+            height: windowHeight * 0.05,
+          ),
           Text(mySection.sections[index],
               style: GoogleFonts.poppins(
                   textStyle: TextStyle(
@@ -159,7 +162,8 @@ class IndividualSection extends StatelessWidget {
                       ),
                       style: ElevatedButton.styleFrom(
                         minimumSize:
-                            Size(windowWidth * 0.5, windowHeight * 0.06), backgroundColor: Colors.transparent,
+                            Size(windowWidth * 0.5, windowHeight * 0.06),
+                        backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),

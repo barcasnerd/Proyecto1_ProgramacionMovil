@@ -73,6 +73,9 @@ class IndividualTrackScreen extends StatelessWidget {
                                 left: windowWidth * 0.01),
                             child: Column(
                               children: [
+                                Container(
+                                  height: windowHeight * 0.05,
+                                ),
                                 Text(
                                   myController.items[index],
                                   textAlign: TextAlign.center,
@@ -203,8 +206,8 @@ class IndividualTrackScreen extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                  mySection.changePage(index, 4);
-                                  print("Indice: ${index}");
+                                    mySection.changePage(index, 4);
+                                    print("Indice: ${index}");
                                   },
                                   child: Container(
                                     width: windowWidth * 0.2,

@@ -22,6 +22,9 @@ class HistoryScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
+          Container(
+            height: windowHeight * 0.05,
+          ),
           Text('History',
               style: GoogleFonts.poppins(
                   textStyle: TextStyle(

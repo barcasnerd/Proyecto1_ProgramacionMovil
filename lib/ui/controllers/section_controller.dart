@@ -1,8 +1,24 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SectionController extends GetxController {
+  Rx<List<LatLng>> coordinatesList = Rx<List<LatLng>>([]);
+
+  void addCoordinate(LatLng coordinate) {
+    if (coordinatesList.value.length >= 4) {
+      coordinatesList.update((list) {
+        list!.removeAt(0);
+        list.add(coordinate);
+      });
+    } else {
+      coordinatesList.update((list) {
+        list!.add(coordinate);
+      });
+    }
+  }
+
   final List<String> sections = [
     "Buenavista",
     "Mi Casa",
@@ -15,7 +31,6 @@ class SectionController extends GetxController {
     "done",
   ].obs;
   var selectedItem = "Buenavista".obs;
-
   List<String> getActivities() {
     return sections;
   }
