@@ -19,6 +19,7 @@ class IndividualSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = Get.arguments;
     int index = args as int;
+    print(index);
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -110,7 +111,7 @@ class IndividualSection extends StatelessWidget {
                                       Polyline(
                                         polylineId: PolylineId("route"),
                                         points: mySection.segments[index],
-                                        color: Colors.red,
+                                        color: Colors.blue,
                                         width: 10,
                                       ),
                                     },

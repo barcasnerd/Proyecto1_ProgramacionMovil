@@ -94,6 +94,7 @@ class HistoryScreen extends StatelessWidget {
                   return Center(
                     child: GestureDetector(
                       onTap: () {
+                        mySection.initSections();
                         myController.changePage(index, 1);
                         print('El container fue presionado');
                       },

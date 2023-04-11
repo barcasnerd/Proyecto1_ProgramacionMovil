@@ -51,9 +51,11 @@ class SectionController extends GetxController {
     print("Segmento guardado ${segment1}");
     sections.add(nameSection.value);
     segments.add(segment1);
+    print(segments.length);
+    coordinatesList.value.clear();
   }
 
-  final List<String> sections = [
+  final RxList<String> sections = [
     "Buenavista",
     "Mi Casa",
     "Puente Pumarejo",
