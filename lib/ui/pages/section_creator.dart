@@ -107,18 +107,6 @@ class SectionCreator extends StatelessWidget {
                                       padding:
                                           EdgeInsets.all(windowWidth * 0.02),
                                       child: Obx(() => GoogleMap(
-                                            markers: Set<Marker>.of([
-                                              Marker(
-                                                icon: currentLocationIcon,
-                                                markerId:
-                                                    MarkerId('initial_marker'),
-                                                position: LatLng(
-                                                    snapshot.data?.latitude ??
-                                                        10.963889,
-                                                    snapshot.data?.longitude ??
-                                                        -74.796387),
-                                              )
-                                            ]),
                                             minMaxZoomPreference:
                                                 MinMaxZoomPreference(15, 18),
                                             mapType: MapType.normal,
@@ -161,9 +149,9 @@ class SectionCreator extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight * 0.01),
+                                left: windowWidth * 0.08,
+                                right: windowWidth * 0.08,
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -172,6 +160,8 @@ class SectionCreator extends StatelessWidget {
                                     width: windowWidth * 0.9,
                                     child: TextFormField(
                                       keyboardType: TextInputType.emailAddress,
+                                      onChanged: (value) =>
+                                          mySection.nameSection.value = value,
                                       style: GoogleFonts.poppins(
                                           fontSize: windowHeight * 0.02),
                                       decoration: InputDecoration(
@@ -187,90 +177,6 @@ class SectionCreator extends StatelessWidget {
                                           border: InputBorder.none,
                                           hintText: 'Section name',
                                           prefixIcon: Icon(IconlyLight.paper)),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(windowHeight * 0.001),
-                            child: Text("Starting location",
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w400, fontSize: 12)),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight * 0.01),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                      child: SizedBox(
-                                    width: windowWidth * 0.9,
-                                    child: TextFormField(
-                                      style: GoogleFonts.poppins(
-                                          fontSize: windowHeight * 0.02),
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          filled: true,
-                                          border: InputBorder.none,
-                                          hintText: '10.994023, -74.819782',
-                                          prefixIcon:
-                                              Icon(IconlyLight.discovery)),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(windowHeight * 0.001),
-                            child: Text("Finishing location",
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w400, fontSize: 12)),
-                          ),
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: windowWidth * 0.08,
-                                  right: windowWidth * 0.08,
-                                  top: windowHeight * 0.01),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                      child: SizedBox(
-                                    width: windowWidth * 0.9,
-                                    child: TextFormField(
-                                      style: GoogleFonts.poppins(
-                                          fontSize: windowHeight * 0.02),
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          filled: true,
-                                          border: InputBorder.none,
-                                          hintText: '10.994023, -74.819782',
-                                          prefixIcon:
-                                              Icon(IconlyLight.discovery)),
                                     ),
                                   )),
                                 ],
@@ -294,8 +200,9 @@ class SectionCreator extends StatelessWidget {
                               onPressed: () =>
                                   //darle funcionalidad cuando tengamos los controladores
                                   {
-                                Navigator.of(context)
-                                    .popAndPushNamed('/history')
+                                //Navigator.of(context).popAndPushNamed('/history')
+                                mySection.saveSegment(mySection.coordinatesList,
+                                    mySection.nameSection)
                               },
                               child: Text(
                                 'Create section',

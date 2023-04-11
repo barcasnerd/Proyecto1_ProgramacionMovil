@@ -76,9 +76,10 @@ class HistoryScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 0, 60, 0),
               child: GestureDetector(
                 onTap: () {
+                  mySection.initSections();
                   mySection.changePage(0, 2);
                 },
-                child: Text('View all activities',
+                child: Text('View all segments',
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(fontSize: windowHeight * 0.018))),
               ),
