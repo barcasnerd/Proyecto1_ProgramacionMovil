@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
+import 'package:exercise_tracker/models/trayectory_point.dart';
+import 'package:exercise_tracker/ui/controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,6 +66,11 @@ class MapViewController extends GetxController {
 
   double currentDistance = 0.0;
   Rx<String> showableDistance = (0.0).toStringAsFixed(2).obs;
+
+  List<TrayectoryPoint> finalRouteInformation = [];
+  TrayectoryMetadata? routeInformationToSave;
+
+  static UserController userController = Get.put(UserController());
 
   Future<void> getPolyPoints() async {
     try {
@@ -137,6 +145,12 @@ class MapViewController extends GetxController {
             locationSettings: const geo.LocationSettings(
                 accuracy: geo.LocationAccuracy.best, distanceFilter: 10))
         .listen((newLoc) async {
+      logInfo('[getCurrentLocation]: determite stamp by each position');
+      logDebug(DateTime.now());
+      DateTime currentTimestap = DateTime.now();
+      logInfo('[getCurrentLocation]: Getting velocity (km/h)');
+      double currentSpeed = (newLoc.speed * 3600) / 1000;
+      logDebug(currentSpeed);
       logInfo(
           '[getCurrentLocation]: Assigning showable location from suscription');
       currentLocation = newLoc;
@@ -148,7 +162,7 @@ class MapViewController extends GetxController {
       logInfo('[getStartingPosition]: asing future location');
       futureLocation = newLoc;
       logInfo('[getStartingPosition]: calculate distance');
-      var distance = distanceInKm(
+      double distance = distanceInKm(
           pasterLocation!.latitude,
           pasterLocation!.longitude,
           futureLocation!.latitude,
@@ -179,6 +193,18 @@ class MapViewController extends GetxController {
               showableCurrentLocation.value.latitude,
               showableCurrentLocation.value.longitude))
           : null;
+      if (this.isRecording == true) {
+        logInfo('[getCurrentLocation]: save trayectory point metadata');
+        TrayectoryPoint temp = TrayectoryPoint(
+            currentTimestap,
+            currentSpeed,
+            LatLng(showableCurrentLocation.value.latitude,
+                showableCurrentLocation.value.longitude),
+            distance,
+            currentDistance,
+            '${hours.value.toString().padLeft(2, '0')}:${minutes.value.toString().padLeft(2, '0')}:${seconds.value.toString().padLeft(2, '0')}');
+        finalRouteInformation.add(temp);
+      }
     });
     logInfo('[getCurrentLocation]: Finished');
   }
@@ -272,6 +298,7 @@ class MapViewController extends GetxController {
     hours = 0.obs;
     currentDistance = 0;
     showableDistance = (0.0).toStringAsFixed(2).obs;
+    finalRouteInformation = [];
     if (stopwatch != null && stopwatch.isRunning == true) {
       logInfo('[resetControllerVariables]: reset stopwatch');
       await stopwatch.reset();
@@ -318,6 +345,81 @@ class MapViewController extends GetxController {
     logInfo('[stopStopWatch]: Finished');
   }
 
+  bool isWithin25Meters(double lat1, double lon1, double lat2, double lon2) {
+    const R = 6371000; // Radio de la Tierra en metros
+    var dLat = (lat2 - lat1) * pi / 180;
+    var dLon = (lon2 - lon1) * pi / 180;
+    var a = pow(sin(dLat / 2), 2) +
+        cos(lat1 * pi / 180) * cos(lat2 * pi / 180) * pow(sin(dLon / 2), 2);
+    var c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    var d = R * c;
+    return d <= 25;
+  }
+
+  List<List<LatLng>> getTrajectoriesPassingThroughPoints(
+      List<LatLng> fourPointsTrajectory, List<List<LatLng>> trajectories) {
+    List<List<LatLng>> passingTrajectories = [];
+    for (List<LatLng> trajectory in trajectories) {
+      bool passesThroughPoints = true;
+      for (LatLng point in trajectory) {
+        bool passesThroughPoint = false;
+        for (int i = 0; i < fourPointsTrajectory.length - 1; i++) {
+          double lat1 = fourPointsTrajectory[i].latitude;
+          double lon1 = fourPointsTrajectory[i].longitude;
+          double lat2 = fourPointsTrajectory[i + 1].latitude;
+          double lon2 = fourPointsTrajectory[i + 1].longitude;
+          if (isWithin25Meters(point.latitude, point.longitude, lat1, lon1) ||
+              isWithin25Meters(point.latitude, point.longitude, lat2, lon2)) {
+            passesThroughPoint = true;
+            break;
+          }
+          double d = pointToLineDistance(point, lat1, lon1, lat2, lon2);
+          if (d <= 25) {
+            passesThroughPoint = true;
+            break;
+          }
+        }
+        if (!passesThroughPoint) {
+          passesThroughPoints = false;
+          break;
+        }
+      }
+      if (passesThroughPoints) {
+        passingTrajectories.add(trajectory);
+      }
+    }
+    return passingTrajectories;
+  }
+
+  double pointToLineDistance(
+      LatLng point, double lat1, double lon1, double lat2, double lon2) {
+    double x = point.longitude - lon1;
+    double y = point.latitude - lat1;
+    double dx = lon2 - lon1;
+    double dy = lat2 - lat1;
+    double dot = x * dx + y * dy;
+    double lengthSquared = dx * dx + dy * dy;
+    double distanceSquared = 0;
+    if (lengthSquared != 0) {
+      double t = dot / lengthSquared;
+      if (t < 0) {
+        distanceSquared = x * x + y * y;
+      } else if (t > 1) {
+        distanceSquared = (point.longitude - lon2) * (point.longitude - lon2) +
+            (point.latitude - lat2) * (point.latitude - lat2);
+      } else {
+        double nearestX = lon1 + t * dx;
+        double nearestY = lat1 + t * dy;
+        distanceSquared =
+            (point.longitude - nearestX) * (point.longitude - nearestX) +
+                (point.latitude - nearestY) * (point.latitude - nearestY);
+      }
+    } else {
+      distanceSquared = x * x + y * y;
+    }
+    return sqrt(distanceSquared);
+  }
+
   double distanceInKm(lat1, long1, lat2, long2) {
     var R = 6371; // Radio de la Tierra en km
     var dLat = _degToRad(lat2 - lat1);
@@ -333,6 +435,14 @@ class MapViewController extends GetxController {
     return degrees * pi / 180;
   }
 
+  Future<void> saveTrayectoryMetadata() async {
+    logInfo('[saveTrayectoryMetadata]: Init');
+    routeInformationToSave = TrayectoryMetadata(
+        userController.currentUser.value, finalRouteInformation);
+    logDebug(routeInformationToSave.toString());
+    logInfo('[saveTrayectoryMetadata]: Finished');
+  }
+
   Future<void> main() async {
     logInfo('[main]: Init');
     //await getPolyPoints();
@@ -345,6 +455,7 @@ class MapViewController extends GetxController {
 
   Future<void> close() async {
     logInfo('[close]: Init');
+    await saveTrayectoryMetadata();
     await resetControllerVariables();
     await closePositionStream();
     //await Get.delete<MapViewController>();
