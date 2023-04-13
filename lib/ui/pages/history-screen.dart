@@ -6,6 +6,7 @@ import '../controllers/section_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import 'package:exercise_tracker/ui/controllers/nav_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:exercise_tracker/models/trayectory_point.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});

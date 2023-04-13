@@ -200,9 +200,10 @@ class SectionCreator extends StatelessWidget {
                               onPressed: () =>
                                   //darle funcionalidad cuando tengamos los controladores
                                   {
-                                //Navigator.of(context).popAndPushNamed('/history')
                                 mySection.saveSegment(mySection.coordinatesList,
-                                    mySection.nameSection)
+                                    mySection.nameSection),
+                                Navigator.of(context)
+                                    .popAndPushNamed('/sections')
                               },
                               child: Text(
                                 'Create section',
