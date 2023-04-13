@@ -1,6 +1,7 @@
 import 'package:exercise_tracker/ui/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   var email = "".obs;
@@ -10,11 +11,28 @@ class LoginController extends GetxController {
   var isLogged = false.obs;
   static UserController userController = Get.put(UserController());
 
+  @override
+  void onInit() async {
+    super.onInit();
+    await autoLogin();
+  }
+
   void togglePasswordVisibility() {
     visiblePassword.value = !visiblePassword.value;
   }
 
-  void validateEmailAndPassword(BuildContext context) {
+  Future<void> autoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final username = prefs.getString('username');
+    final password = prefs.getString('password');
+    if (username != null && password != null) {
+      email.value = username;
+      this.password.value = password;
+      login();
+    }
+  }
+
+  void login() {
     invalidCredentials.value =
         !validateEmail(email.value) || !validatePassword(password.value);
     print('📄${invalidCredentials.value}');
@@ -25,8 +43,10 @@ class LoginController extends GetxController {
       userController.currentUser.value =
           userController.getUserByEmailAndPassword(
               email.value.toLowerCase(), password.value)!;
+      storeCredentials(email.value, password.value); // Almacenar credenciales
       resetVariables();
-      Navigator.popAndPushNamed(context, '/home');
+      isLogged.value = true;
+      Get.offNamed('/home');
     } else {
       invalidCredentials.value = true;
     }
@@ -62,5 +82,17 @@ class LoginController extends GetxController {
     invalidCredentials.value = false;
     isLogged.value = false;
     refresh();
+  }
+
+  Future<void> storeCredentials(String username, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
+    await prefs.setString('password', password);
+  }
+
+  Future<void> deleteCredentials() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('username');
+    await prefs.remove('password');
   }
 }

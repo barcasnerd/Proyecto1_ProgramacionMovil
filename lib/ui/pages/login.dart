@@ -133,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        loginController.validateEmailAndPassword(context);
+                        loginController.login();
                         if (loginController.invalidCredentials.value == true) {
                           Blurry.error(
                             title: """Invalid credentials""",

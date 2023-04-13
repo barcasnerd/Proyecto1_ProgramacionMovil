@@ -3,6 +3,7 @@ import 'package:exercise_tracker/ui/controllers/home_controller.dart';
 import 'package:exercise_tracker/ui/widgets/CustomNavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:exercise_tracker/ui/controllers/login_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import '../controllers/user_controller.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   static NavController controllerNav = Get.put(NavController());
   static HomeController controllerRoute = Get.put(HomeController());
   static UserController userController = Get.put(UserController());
-
+  static LoginController loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     double windowHeight = MediaQuery.of(context).size.height;
@@ -84,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                                                           windowHeight * 0.02),
                                                 ),
                                                 onTap: () {
+                                                  loginController.deleteCredentials();
                                                   // Acción a realizar cuando se selecciona la opción 'Música'
                                                   Navigator.of(context)
                                                       .popAndPushNamed(

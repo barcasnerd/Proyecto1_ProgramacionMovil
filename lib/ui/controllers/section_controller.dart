@@ -52,7 +52,7 @@ class SectionController extends GetxController {
     sections.add(nameSection.value);
     segments.add(segment1);
     print(segments.length);
-    //coordinatesList.value.clear();
+    coordinatesList.value.clear();
   }
 
   final RxList<String> sections = [
