@@ -133,10 +133,18 @@ class SectionCreator extends StatelessWidget {
                                             polylines: {
                                               Polyline(
                                                 polylineId: PolylineId("route"),
+                                                points: myController
+                                                    .historial[index],
+                                                color: Colors.red,
+                                                width: 10,
+                                              ),
+                                              Polyline(
+                                                polylineId:
+                                                    PolylineId("section"),
                                                 points: mySection
                                                     .coordinatesList.value,
                                                 color: Color(0xff09fba5),
-                                                width: 10,
+                                                width: 6,
                                               ),
                                             },
                                           )),
