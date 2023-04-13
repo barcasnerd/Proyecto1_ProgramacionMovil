@@ -3,6 +3,8 @@ import 'package:exercise_tracker/models/trayectory_point.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class HistoryController extends GetxController {
   List<List<LatLng>> historial = [];
@@ -74,6 +76,30 @@ class HistoryController extends GetxController {
     }
   }
 
+  String formatDate(String dateString) {
+    final months = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre'
+    ];
+
+    final dateParts = dateString.split('-');
+    final day = int.parse(dateParts[2]);
+    final month = months[int.parse(dateParts[1]) - 1];
+    final year = dateParts[0];
+
+    return '$day de $month $year';
+  }
+
   void addHistory(TrayectoryMetadata? route) {
     var abc = route?.points.length;
 
@@ -84,16 +110,22 @@ class HistoryController extends GetxController {
       }
     }
     historial.add(test!);
-    //String fecha = route?.points[abc].timestamp.toString() ?? '';
-    //double? distancia = route?.points[abc].acummulatedDistance;
+    String fecha = route?.points[abc - 1].timestamp.toString() ?? '';
+    fecha = fecha.substring(0, 9);
+    final formattedDate = formatDate(fecha);
+    double? distancia = route?.points[abc - 1].acummulatedDistance;
     //int distanceint = distancia!.toInt() ?? 0;
-    //String tiempo = route?.points[abc].acummulatedElapsedTime.toString() ?? '';
+    String tiempo =
+        route?.points[abc - 1].acummulatedElapsedTime.toString() ?? '';
     //items.add(fecha);
-    //distance.add(distancia);
-    //duration.add(tiempo);
-    items.add("test");
-    distance.add("69");
-    duration.add("tiempo");
+
+    items.add(formattedDate);
+
+    if (distancia != null) {
+      distance.add(distancia.toPrecision(1));
+    }
+
+    duration.add(tiempo);
     type.add(true);
   }
 
@@ -105,7 +137,7 @@ class HistoryController extends GetxController {
     "12 de marzo 2023",
     "15 de marzo 2023"
   ].obs;
-  final List<String> distance = ["25", "83", "14", "69", "55", "42"].obs;
+  final List<double> distance = [25.0, 83.0, 14.0, 69.0, 55.0, 42.0].obs;
 
   final List<String> duration = [
     "00:02:22",
@@ -157,7 +189,7 @@ class HistoryController extends GetxController {
     return duration;
   }
 
-  List<String> getDistance() {
+  List<double> getDistance() {
     return distance;
   }
 

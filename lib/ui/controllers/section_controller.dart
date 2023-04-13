@@ -48,10 +48,10 @@ class SectionController extends GetxController {
 
   void saveSegment(Rx<List<LatLng>> coordinates, var nameSection) {
     segment1 = coordinates.value;
-    print("Segmento guardado ${segment1}");
+
     sections.add(nameSection.value);
     segments.add(segment1);
-    print(segments.length);
+
     //coordinatesList.value.clear();
   }
 
