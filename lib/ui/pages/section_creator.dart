@@ -13,6 +13,7 @@ import '../controllers/section_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:blurry/blurry.dart';
 
 class SectionCreator extends StatelessWidget {
   const SectionCreator({super.key});
@@ -127,8 +128,7 @@ class SectionCreator extends StatelessWidget {
                                             mySection.addCoordinate(latLng);
                                             _onTapCount++;
                                             if (_onTapCount >= 4) {
-                                              myController.visible();
-                                              print("hice visible");
+                                              print("ya se puede guardar");
                                             }
                                           },
                                           polylines: {
@@ -208,15 +208,60 @@ class SectionCreator extends StatelessWidget {
                             ),
                             child: ElevatedButton(
                               onPressed: () => {
-                                print(
-                                    "Trayectorias  ${myController.historial}"),
-                                print("Seccion dibujada  ${mySection.ojala}"),
-                                print(
-                                    " los puntos que pasan ${mapViewController.getTrajectoriesPassingThroughPoints(mySection.ojala, myController.historial)}"),
-                                mySection.saveSegment(
-                                    mySection.ojala, mySection.nameSection),
-                                Navigator.of(context)
-                                    .popAndPushNamed('/sections')
+                                if (_onTapCount >= 4)
+                                  {
+                                    print(
+                                        "Trayectorias  ${myController.historial}"),
+                                    print(
+                                        "Seccion dibujada  ${mySection.ojala}"),
+                                    print(
+                                        " los puntos que pasan ${mapViewController.getTrajectoriesPassingThroughPoints(mySection.ojala, myController.historial)}"),
+                                    mySection.saveSegment(
+                                        mySection.ojala, mySection.nameSection),
+                                    Blurry.success(
+                                      title: """Section saved""",
+                                      description:
+                                          'Your section has been saved. You can check your other sections in the segments tab',
+                                      confirmButtonText: 'Accept',
+                                      onConfirmButtonPressed: () async {
+                                        Navigator.popAndPushNamed(
+                                            context, '/sections');
+                                      },
+                                      displayCancelButton: false,
+                                      titleTextStyle: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: windowHeight * 0.03),
+                                      descriptionTextStyle: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: windowHeight * 0.023,
+                                      ),
+                                      buttonTextStyle: GoogleFonts.poppins(
+                                          color: Colors.white),
+                                    ).show(context),
+                                  }
+                                else
+                                  {
+                                    Blurry.error(
+                                      title: """Error""",
+                                      description:
+                                          'in order to save your segment mark down four pints in the map, please start over.',
+                                      confirmButtonText: 'Accept',
+                                      onConfirmButtonPressed: () async {
+                                        mySection.coordinatesList.value.clear();
+                                        Navigator.pop(context);
+                                      },
+                                      displayCancelButton: false,
+                                      titleTextStyle: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: windowHeight * 0.03),
+                                      descriptionTextStyle: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: windowHeight * 0.023,
+                                      ),
+                                      buttonTextStyle: GoogleFonts.poppins(
+                                          color: Colors.white),
+                                    ).show(context),
+                                  },
                               },
                               child: Text(
                                 'Create section',
@@ -236,7 +281,7 @@ class SectionCreator extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ));

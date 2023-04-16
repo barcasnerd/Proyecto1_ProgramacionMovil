@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:exercise_tracker/ui/controllers/history_controller.dart';
 import "package:exercise_tracker/ui/pages/draft_page.dart";
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   testWidgets('ElevatedButtons is present', (WidgetTester tester) async {
@@ -43,5 +44,31 @@ void main() {
     )));
     final listFinder = find.byType(Text);
     expect(listFinder, findsWidgets);
+  });
+
+  testWidgets('Checkbox changes value when pressed',
+      (WidgetTester tester) async {
+    // Construir el widget que contiene el checkbox
+    bool checkboxValue = false;
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Checkbox(
+          value: checkboxValue,
+          onChanged: (value) {
+            checkboxValue = value!;
+          },
+        ),
+      ),
+    ));
+
+    // Verificar que el checkbox esté inicialmente sin seleccionar
+    expect(checkboxValue, false);
+
+    // Tocar el checkbox
+    await tester.tap(find.byType(Checkbox));
+    await tester.pump();
+
+    // Verificar que el checkbox haya cambiado su valor a "seleccionado"
+    expect(checkboxValue, true);
   });
 }
