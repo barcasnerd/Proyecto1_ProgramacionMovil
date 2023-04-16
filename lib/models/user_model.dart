@@ -39,4 +39,29 @@ class User {
 
   double get height => _height;
   set height(double value) => _height = value;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['firstName'] = this._firstName;
+    data['lastName'] = this._lastName;
+    data['email'] = this._email;
+    data['password'] = this._password;
+    data['gender'] = this._gender;
+    data['profileImageUrl'] = this._profileImageUrl;
+    data['dateOfBirth'] = this._dateOfBirth.toIso8601String();
+    data['weight'] = this._weight;
+    data['height'] = this._height;
+    return data;
+  }
+
+  User.fromJson(Map<String, dynamic> json)
+      : this._firstName = json['firstName'],
+        this._lastName = json['lastName'],
+        this._email = json['email'],
+        this._password = json['password'],
+        this._gender = json['gender'],
+        this._profileImageUrl = json['profileImageUrl'],
+        this._dateOfBirth = DateTime.parse(json['dateOfBirth']),
+        this._weight = json['weight'],
+        this._height = json['height'];
 }
