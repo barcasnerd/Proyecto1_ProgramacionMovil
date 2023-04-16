@@ -6,16 +6,20 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class SectionController extends GetxController {
   var nameSection = "".obs;
   Rx<List<LatLng>> coordinatesList = Rx<List<LatLng>>([]);
+  List<LatLng> ojala = [];
   List<LatLng> segment1 = [];
   void addCoordinate(LatLng coordinate) {
-    if (coordinatesList.value.length >= 5) {
+    if (coordinatesList.value.length >= 4) {
       coordinatesList.update((list) {
+        ojala.removeAt(0);
+        ojala.add(coordinate);
         list!.removeAt(0);
         list.add(coordinate);
       });
     } else {
       coordinatesList.update((list) {
         list!.add(coordinate);
+        ojala.add(coordinate);
       });
     }
   }
@@ -46,13 +50,17 @@ class SectionController extends GetxController {
     }
   }
 
-  void saveSegment(Rx<List<LatLng>> coordinates, var nameSection) {
-    segment1 = coordinates.value;
-    print("Segmento guardado ${segment1}");
+  void saveSegment(List<LatLng> coordinates, var nameSection) {
+    //segment1 = coordinates.value;
+    print("Este es coordinates ${coordinates}");
     sections.add(nameSection.value);
-    segments.add(segment1);
-    print(segments.length);
-    //coordinatesList.value.clear();
+    segments.add(coordinates);
+    clearValues();
+  }
+
+  void clearValues() {
+    coordinatesList.value.clear();
+    ojala = [];
   }
 
   final RxList<String> sections = [

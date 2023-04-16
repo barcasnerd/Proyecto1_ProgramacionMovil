@@ -9,10 +9,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 
+import '../controllers/history_controller.dart';
+import '../controllers/section_controller.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
+  static HistoryController myController = Get.put(HistoryController());
   static LoginController loginController = Get.put(LoginController());
+  static SectionController mySection = Get.put(SectionController());
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +138,8 @@ class LoginScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         loginController.validateEmailAndPassword(context);
+                        myController.initHistory();
+                        mySection.initSections();
                         if (loginController.invalidCredentials.value == true) {
                           Blurry.error(
                             title: """Invalid credentials""",

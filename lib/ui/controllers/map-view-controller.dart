@@ -18,6 +18,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter/painting.dart' as painting;
 
+import 'history_controller.dart';
 import 'home_controller.dart';
 
 class MapViewController extends GetxController {
@@ -69,7 +70,7 @@ class MapViewController extends GetxController {
 
   List<TrayectoryPoint> finalRouteInformation = [];
   TrayectoryMetadata? routeInformationToSave;
-
+  static HistoryController myController = Get.put(HistoryController());
   static UserController userController = Get.put(UserController());
 
   Future<void> getPolyPoints() async {
@@ -374,7 +375,8 @@ class MapViewController extends GetxController {
             break;
           }
           double d = pointToLineDistance(point, lat1, lon1, lat2, lon2);
-          if (d <= 25) {
+          if (d <= 0.003) {
+            print("D: $d");
             passesThroughPoint = true;
             break;
           }
@@ -388,6 +390,7 @@ class MapViewController extends GetxController {
         passingTrajectories.add(trajectory);
       }
     }
+    print(passingTrajectories);
     return passingTrajectories;
   }
 
@@ -440,6 +443,7 @@ class MapViewController extends GetxController {
     routeInformationToSave = TrayectoryMetadata(
         userController.currentUser.value, finalRouteInformation);
     logDebug(routeInformationToSave.toString());
+    myController.addHistory(routeInformationToSave);
     logInfo('[saveTrayectoryMetadata]: Finished');
   }
 

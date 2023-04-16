@@ -124,7 +124,7 @@ class IndividualTrackScreen extends StatelessWidget {
                                                 10.963889,
                                             snapshot.data?.longitude ??
                                                 -74.796387),
-                                        zoom: 15.0),
+                                        zoom: 1),
                                     polylines: {
                                       Polyline(
                                         polylineId: PolylineId("route"),
