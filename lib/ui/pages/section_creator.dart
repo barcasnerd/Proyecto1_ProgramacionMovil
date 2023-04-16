@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../controllers/map-view-controller.dart';
 import '../controllers/section_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,6 +16,7 @@ import 'package:iconly/iconly.dart';
 
 class SectionCreator extends StatelessWidget {
   const SectionCreator({super.key});
+  static MapViewController mapViewController = Get.put(MapViewController());
   static HistoryController myController = Get.put(HistoryController());
   static SectionController mySection = Get.put(SectionController());
   static NavController controllerNav = Get.put(NavController());
@@ -25,9 +27,10 @@ class SectionCreator extends StatelessWidget {
     int index = args as int;
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
+    int _onTapCount = 0;
 
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: FutureBuilder(
           future: _determinePosition(),
           builder: (context, snapshot) {
@@ -53,7 +56,7 @@ class SectionCreator extends StatelessWidget {
                   width: windowWidth,
                   height: windowHeight * 0.82,
                   child: Padding(
-                    padding: EdgeInsets.only(top: windowWidth * 0.0),
+                    padding: EdgeInsets.only(top: windowWidth * 0.08),
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -118,10 +121,15 @@ class SectionCreator extends StatelessWidget {
                                                       10.963889,
                                                   snapshot.data?.longitude ??
                                                       -74.796387),
-                                              zoom: 15.0),
+                                              zoom: 1.0),
                                           // Agregar onTap y una función que maneje el evento
                                           onTap: (LatLng latLng) {
                                             mySection.addCoordinate(latLng);
+                                            _onTapCount++;
+                                            if (_onTapCount >= 4) {
+                                              myController.visible();
+                                              print("hice visible");
+                                            }
                                           },
                                           polylines: {
                                             Polyline(
@@ -157,6 +165,7 @@ class SectionCreator extends StatelessWidget {
                               children: [
                                 Flexible(
                                     child: SizedBox(
+                                  height: windowHeight * 0.8,
                                   width: windowWidth * 0.9,
                                   child: TextFormField(
                                     keyboardType: TextInputType.emailAddress,
@@ -183,45 +192,51 @@ class SectionCreator extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Spacer(),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromRGBO(157, 206, 255, 1),
-                                Color.fromRGBO(6, 252, 163, 1)
-                              ],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                        Visibility(
+                          visible: !myController.checkVisibility(),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromRGBO(157, 206, 255, 1),
+                                  Color.fromRGBO(6, 252, 163, 1)
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                //darle funcionalidad cuando tengamos los controladores
-                                {
-                              mySection.saveSegment(
-                                  mySection.ojala, mySection.nameSection),
-                              Navigator.of(context).popAndPushNamed('/sections')
-                            },
-                            child: Text(
-                              'Create section',
-                              style: GoogleFonts.poppins(
-                                  fontSize: windowHeight * 0.02,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize:
-                                  Size(windowWidth * 0.5, windowHeight * 0.06),
-                              backgroundColor: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
+                            child: ElevatedButton(
+                              onPressed: () => {
+                                print(
+                                    "Trayectorias  ${myController.historial}"),
+                                print("Seccion dibujada  ${mySection.ojala}"),
+                                print(
+                                    " los puntos que pasan ${mapViewController.getTrajectoriesPassingThroughPoints(mySection.ojala, myController.historial)}"),
+                                mySection.saveSegment(
+                                    mySection.ojala, mySection.nameSection),
+                                Navigator.of(context)
+                                    .popAndPushNamed('/sections')
+                              },
+                              child: Text(
+                                'Create section',
+                                style: GoogleFonts.poppins(
+                                    fontSize: windowHeight * 0.02,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    windowWidth * 0.5, windowHeight * 0.06),
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ));

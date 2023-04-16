@@ -375,7 +375,8 @@ class MapViewController extends GetxController {
             break;
           }
           double d = pointToLineDistance(point, lat1, lon1, lat2, lon2);
-          if (d <= 25) {
+          if (d <= 0.003) {
+            print("D: $d");
             passesThroughPoint = true;
             break;
           }
@@ -389,6 +390,7 @@ class MapViewController extends GetxController {
         passingTrajectories.add(trajectory);
       }
     }
+    print(passingTrajectories);
     return passingTrajectories;
   }
 

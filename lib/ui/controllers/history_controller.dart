@@ -9,6 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 class HistoryController extends GetxController {
   List<List<LatLng>> historial = [];
   List<LatLng>? test = [];
+
   void initHistory() {
     if (historial.length == 0) {
       historial.add([
@@ -129,7 +130,15 @@ class HistoryController extends GetxController {
     type.add(true);
   }
 
-  final RxList<String> items = [
+  RxList<String> copia = [
+    "1 de marzo 2023",
+    "3 de marzo 2023",
+    "7 de marzo 2023",
+    "10 de marzo 2023",
+    "12 de marzo 2023",
+    "15 de marzo 2023"
+  ].obs;
+  RxList<String> items = [
     "1 de marzo 2023",
     "3 de marzo 2023",
     "7 de marzo 2023",
@@ -175,6 +184,35 @@ class HistoryController extends GetxController {
         }
       }
     }
+  }
+
+  RxBool isChecked = false.obs;
+  RxBool showButton = false.obs;
+
+  void visible() {
+    //showButton.value = true;
+  }
+
+  bool checkVisibility() {
+    print("me llamaron");
+    print(showButton);
+    if (showButton.value == true) {
+      print("devolvi true what");
+      return true;
+    } else {
+      print("devolvi false");
+      return false;
+    }
+  }
+
+  void toggleCheckbox() {
+    if (isChecked.value == false) {
+      isChecked.value = true;
+    } else {
+      isChecked.value = false;
+    }
+
+    print("Controller $isChecked");
   }
 
   void changePageSections() {

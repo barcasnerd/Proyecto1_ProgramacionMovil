@@ -17,6 +17,7 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     myController.initHistory();
+
     String _selectedValue;
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
@@ -43,34 +44,51 @@ class HistoryScreen extends StatelessWidget {
                           fontSize: windowHeight * 0.02))),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Color.fromARGB(250, 247, 248, 248),
-            ),
-            width: windowWidth * 0.8,
-            child: Obx(
-              () => DropdownButton<String>(
-                value: mySection.selectedItem.value,
-                items: mySection.sections.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, windowWidth * 0.4, 0),
-                      child: Text(value),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (newValue) {
-                  log("Hice cambio ${newValue}");
-                  _selectedValue = newValue ?? "";
-                  mySection.setSelectedItem(_selectedValue);
-                },
-                style: TextStyle(color: Colors.black, fontSize: 16),
-                underline: Container(),
+
+          Row(children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(windowWidth * 0.03, 0, 0, 0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Color.fromARGB(250, 247, 248, 248),
+              ),
+              width: windowWidth * 0.8,
+              child: Obx(
+                () => DropdownButton<String>(
+                  value: mySection.selectedItem.value,
+                  items: mySection.sections.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            windowWidth * 0.09, 0, windowWidth * 0.3, 0),
+                        child: Text(value),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    log("Hice cambio ${newValue}");
+                    _selectedValue = newValue ?? "";
+                    mySection.setSelectedItem(_selectedValue);
+                  },
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  underline: Container(),
+                ),
               ),
             ),
-          ),
+            Container(
+              child: Obx(
+                () => Checkbox(
+                  value: myController.isChecked.value,
+                  onChanged: (value) {
+                    //myController.isChecked.value = value!;
+                    myController.toggleCheckbox();
+                    controllerNav.changePage(1);
+                  },
+                ),
+              ),
+            )
+          ]),
 
           Align(
             alignment: AlignmentDirectional.centerEnd,
@@ -88,83 +106,89 @@ class HistoryScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Obx(
-              () => ListView.builder(
-                itemCount: myController.items.length,
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        mySection.initSections();
-                        myController.changePage(index, 1);
-                        print('El container fue presionado');
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(30, 158, 158, 158),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        padding: EdgeInsets.all(16),
-                        margin: EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(10, 25, 20, 25),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  myController.type[index]
-                                      ? Icon(
-                                          Icons.directions_bike_rounded,
-                                          size: 40,
-                                        )
-                                      : Icon(
-                                          Icons.accessibility_rounded,
-                                          size: 40,
-                                        ),
-                                ],
-                              ),
+            child: Container(
+              child: Obx(
+                () => ListView.builder(
+                  itemCount: myController.items.length,
+                  itemBuilder: (context, index) {
+                    if (myController.isChecked.value) {
+                      return SizedBox.shrink();
+                    } else {
+                      return Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            mySection.initSections();
+                            myController.changePage(index, 1);
+                            print('El container fue presionado');
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(30, 158, 158, 158),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            Row(
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            padding: EdgeInsets.all(16),
+                            margin: EdgeInsets.all(8),
+                            child: Row(
                               children: [
                                 Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  padding: EdgeInsets.fromLTRB(10, 25, 20, 25),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        "${myController.items[index]} ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall,
-                                      ),
-                                      Text(
-                                        "${myController.distance[index]} Km recorridos",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      Text(
-                                        "${myController.duration[index]} de duracion",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
+                                      myController.type[index]
+                                          ? Icon(
+                                              Icons.directions_bike_rounded,
+                                              size: 40,
+                                            )
+                                          : Icon(
+                                              Icons.accessibility_rounded,
+                                              size: 40,
+                                            ),
                                     ],
                                   ),
                                 ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${myController.items[index]} ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
+                                          ),
+                                          Text(
+                                            "${myController.distance[index]} Km recorridos",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                          Text(
+                                            "${myController.duration[index]} de duracion",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ),
